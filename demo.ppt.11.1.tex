@@ -1,0 +1,800 @@
+\documentclass{beamer}
+\usepackage{ctex} %注意这个宏包
+\usepackage{multicol}
+\usepackage{color}
+%\usetheme{umbc4}
+\usetheme[height=12mm]{Rochester}
+%\usetheme{Berkeley}
+\useinnertheme{Marburg}
+\useinnertheme{rounded}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\CTEXoptions[today=old]
+%\setbeamercolor{umbcboxes}{bg=violet!15,fg=black}  % redefine box color!
+
+\title{A STATISTICAL APPROACH TO MACHINE TRANSLATION}
+\author{Chunwei Yan}
+\institute[PKUSZ]{
+\texttt{superjom@sz.pku.edu.cn}
+}
+\date{\today}
+
+\begin{document}
+
+% ------------- title page ----------------------------
+%--- the titlepage frame -------------------------%
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+%--- overview -------------------------%
+\begin{frame}{Overview}
+    \begin{enumerate}
+    \item A Brief History
+    %\pause
+    \item Interest in MT
+    %\pause
+    \item Language Models
+    \item Translation Models
+    \item Demo of Word Alignment Calculation
+    \end{enumerate}
+\end{frame}
+
+
+%--- history -------------------------%
+\begin{frame}{A Brief History}
+    \begin{itemize}
+        \item One of the first application envisioned for computers
+        \pause
+        \item First idea  of SMT:Warren Weaver(沃伦·韦弗)
+            \begin{itemize}
+                \item 1949
+                \item Claude Shannon's(香侬) information theory
+            \end{itemize}
+        \pause
+        \item Re-introduced in 1991 by researchers at IBM's Thomas J. Watson Research Center
+    \end{itemize}
+\end{frame}
+
+%--- interests -------------------------%
+\begin{frame}{Interest in MT}
+    \begin{itemize}
+        \item Translation is a universal need
+        \item MT is popular on the web
+            \begin{itemize}
+                \item Google Translator
+                \item Bing Translator
+                \item 百度在线翻译
+            \end{itemize}
+        \item (Semi-)automated translation could lead to huge savings
+    \end{itemize}
+\end{frame}
+
+%--- introduction -------------------------%
+\begin{frame}{Introduction to Translation}
+    \begin{definition}
+    Job of a translator: render in one language the meaning expressed by a passage of text in another language
+    \end{definition}
+\end{frame}
+
+\begin{frame}{Introduction to Translation}
+    \begin{block}{Assume}
+    Every sentence in one language is a possible translation of any sentence in the other.
+    \begin{center}
+        \begin{tabular}{ l  l }
+            \hline
+            C1  &   E1\\
+            \hline
+            C2  &   E2\\
+            \hline
+            C3  &   E3\\
+            \hline
+        \end{tabular}
+    \end{center}
+    \end{block}
+
+    \pause
+    \begin{block}{Program 1}
+        \begin{center}
+        \begin{pspicture}(-1.2,-1.2)(4,1.2)
+            \psline[linewidth=1pt,linearc=0]{->}(-1,1)(0,1)
+            \psline[linewidth=1pt,linearc=0]{->}(-1,-1)(0,-1)
+            \psline[linewidth=1pt,linearc=0]{->}(2.3,0)(3.1,0)
+            \psframe[fillstyle=solid,fillcolor=lightgray](0.5,-1.2)(2,1.2)
+            %--- charactors--
+            \rput[br]{*0}(-1,1){\emph{e}}
+            \rput[br]{*0}(-1,-1){\emph{c}}
+            \rput[br]{*0}(3.5,0){\emph{$P(e|c)$}}
+        \end{pspicture}
+        \end{center}
+    \end{block}
+
+
+\end{frame}
+
+%--- introduction -------------------------%
+\begin{frame}{Introduction}
+    \begin{block}{Assume}
+    Given a Chinese sentence c, seek the English sentence e that maximizes $P(e|c)$
+    \end{block}
+    \pause
+    \begin{block}{ Program 2}
+        \begin{center}
+        \begin{pspicture}(-1.2,-1.2)(5.5,1.2)
+            \psline[linewidth=1pt,linearc=0]{->}(2.3,1)(3,1)
+            \psline[linewidth=1pt,linearc=0]{->}(2.3,-1)(3,-1)
+            \psline[linewidth=1pt,linearc=0]{->}(-1,0)(0,0)
+            \psframe[fillstyle=solid,fillcolor=lightgray](0.5,-1.2)(2,1.2)
+            %--- charactors--
+            \rput[br]{*0}(4.7,0.8){\emph{e1,$P(e1|c)$}}
+            \rput[br]{*0}(3.5,0){\emph{$\cdots$}}
+            \rput[br]{*0}(4.7,-0.8){\emph{en,$P(e2|c)$}}
+            \rput[br]{*0}(-1,0){\emph{c}}
+        \end{pspicture}
+        \end{center}
+    \end{block}
+    \pause
+    \begin{displaybox}{5cm}     % width of the box is 5cm 
+    \[ arg\max_{e}{P(e|c)} \] 
+     \end{displaybox} 
+\end{frame}
+
+% ------ models -------------------------------
+\begin{frame}{Introduction to Models}
+    Using Bayes Rule(贝叶斯法则):
+    $$
+    P(e|c) = \frac{P(ec)}{P(c)} = \frac{P(c|e)P(e)}{P(c)}
+    $$
+    \begin{center}
+        So: $P(e|c) \sim P(c|e)P(e)$
+    \end{center}
+    \pause
+    \begin{displaybox}{9cm}     % width of the box is 5cm 
+    \[ 
+        arg\max_{e}{P(e|c)} = arg\max_{e}{P(e)*P(c|e)}
+     \] 
+     \end{displaybox} 
+\end{frame}
+
+% ------ models jieshi --------------------------
+\begin{frame}{Noisy Model}
+    \begin{displaybox}{5cm}     % width of the box is 5cm 
+    \[ arg\max_{e}{P(e|f)P(e)} \] 
+     \end{displaybox} 
+    \pause
+    
+    \begin{block}{Bayesian Reasioning}
+        Observe f and try to come up with the most likely translation e, every e gets the score $P(e)*P(f|e)$
+        \begin{itemize}
+            \item Medical symptom
+                \pause
+                \begin{itemize}
+                    \item The probability that symptoms f will arise from disease e \textcolor{blue}{\textbf{P(f|e)}}
+                \pause
+                    \item Is disease e a common disease? \textcolor{blue}{\textbf{P(e)}}
+                \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Noisy Model}
+    \begin{displaybox}{5cm}     % width of the box is 5cm 
+    \[ arg\max_{e}{P(e|f)P(e)} \] 
+     \end{displaybox} 
+    \pause
+    \begin{enumerate}
+    \item Imagine that someone has e in his head \textcolor{blue}{\textbf{P(e)}} 
+    \pause
+    \item By the time it gets on to the printed page it is corrupted by "noise" and becomes f \textcolor{blue}{\textbf{P(f|e)}}
+    \end{enumerate}
+\end{frame}
+
+%------ translation model ----------------------
+\begin{frame}{SMT Model}
+    \begin{block}{$P(e)$ Language Model}
+        Is the disease symptom common?\\
+        Or is the English sentence common?
+        \begin{itemize}
+            \item good enough
+            \item grammatically right
+        \end{itemize}
+        \pause
+        $P(e)$ worries about English word order and asign a high score to e if it is grammatical
+    \end{block}
+    \pause
+    \begin{block}{$P(e|f)$ Translation Model}
+        Will symptoms f arise from disease e?\\
+        Or can e sentence be transformed to f?\\
+        \pause
+        $P(f|e)$ will ensure that a good e will have words that generally translate to words in f.
+    \end{block}
+\end{frame}
+
+%------ translation model ----------------------
+\begin{frame}{SMT Model Demo}
+    \begin{block}{$P(e)$ Language Model}
+        \begin{enumerate}
+            \item a bites dog him
+            \item bites hime a dog
+            \item a dog bites him
+        \end{enumerate}
+    \end{block}
+    \pause
+    \begin{block}{$P(e|f)$ Translation Model}
+        \textcolor{blue}{\textbf{Word bag}} \\
+        Turn a bag of French words into a bag of English words\\
+        Translate "一只狗咬了他" to 
+        \begin{enumerate}
+            \item a bites dog him
+            \item bites hime a dog
+            \item a dog bites him
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+%-------- Language Model --------------------
+\begin{frame}{Language Model}
+        Language Model worries about English word order
+    \pause
+    \begin{block}{N-grams}
+        \begin{tabular}{ l  l  l}
+            n=1 & unigram & P(x)\\
+            n=2 & bigram  & P(y|x)\\
+            n=3 & trigram & P(yz|x)
+        \end{tabular}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}{Language Model}
+Given a word string, $s_1 s_2 \cdots s_n$, we can write
+    \pause
+    \begin{displaybox}{10cm}     % width of the box is 5cm 
+    \[ 
+    P(s_1 s_2 \cdots s_n) 
+        = P(s_1)P(s_2|s_1) \cdots P(s_n|s_1 s_2 \cdots s_{n-1})
+     \] 
+     \end{displaybox} 
+    \pause
+Using Bigram Model:
+    \pause
+    \begin{displaybox}{10cm}     % width of the box is 5cm 
+    \[ 
+    P(s_1 s_2 \cdots s_n) 
+        \sim P(s_1|NULL)P(s_2|s_1) \cdots P(s_n|s_{n-1})
+     \] 
+     \end{displaybox} 
+
+    \pause
+    \begin{block}{Bigram Model Demo}
+        $$
+        b(y|x) = \frac{number-of-occurrences(xy)}
+                {number-of-occurrences(x)}
+        $$
+        P(a dog bites him) $\sim$\\
+        b(a|NULL) b(dog|a)  b(bites|dog)  b(him|bites)
+    \end{block}
+
+\end{frame}
+
+%------- Translation Model--------------------
+\begin{frame}{Translation Model}
+
+    \begin{center}
+    \begin{pspicture}(-3,-.2)(3,1.3)
+        %------ chinese -------
+        \rput[br]{*0}(-3,1){\emph{他}}
+        \rput[br]{*0}(-1,1){\emph{在}}
+        \rput[br]{*0}(1,1){\emph{花园}}
+        \rput[br]{*0}(2,1){\emph{散步}}
+       %--- charactors--
+        \rput[br]{*0}(-3,0){\emph{He}}
+        \rput[br]{*0}(-1,0){\emph{walks}}
+        \rput[br]{*0}(0,0){\emph{in}}
+        \rput[br]{*0}(1.3,0){\emph{the}}
+        \rput[br]{*0}(3,0){\emph{garden}}
+        %------ links ---------
+        \psline[linewidth=1pt,linearc=0]{->}(-3.2,1)(-3.3,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(-1.2,1)(-.3,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(.7,1)(1,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(.7,1)(2.7,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(1.5,1)(-1.3,.3)
+    \end{pspicture}
+    \end{center}
+
+    \pause
+    \begin{block}{Fertility Parameters(生殖力系数)}
+        The number of the English words that a Chinese word produces in a given alignment
+        n(1|他)
+        n(2|花园)
+    \end{block}
+
+    \pause
+    \begin{block}{Distortion Parameters(畸变系数)}
+        d(3|2)=1 : frequency of 在->in \\
+        d(3|2,4,5)=1: add length of the Chinese and English sentences 
+    \end{block}
+\end{frame}
+
+\begin{frame}{Translation Model}
+
+    \begin{block}{Translation Parameters}
+        The frequency of a Chinese word that connects to a certain English word. \\
+        t(walk|散步)=1\\
+        t(garden|花园)=1
+    \end{block}
+    \pause
+    \begin{displaybox}{10cm}     % width of the box is 5cm 
+    \[ 
+        P(a,f|e) = \prod_{i=1}^{l}{
+                n(ph_i | e_i)
+            }
+            *
+            \prod_{j=1}^{m}{
+                t(f_j | ea_j)
+            }
+            *
+            \prod_{j=1}^{m}{
+                d(j | a_j, l, m)
+            }
+     \] 
+     \end{displaybox} 
+\end{frame}
+
+
+\begin{frame}{Translation Model}
+If we had a bunch of English strings and a bunch of step-by-step rewritings into French, then life would be easy.
+    \pause
+    \begin{block}{Translation Sequence}
+        他 在 花园 散步 => He walks in the garden\\
+
+        \begin{center}
+        \begin{pspicture}(-3,-.2)(3,1.3)
+            %------ chinese -------
+            \rput[br]{*0}(-3,1){\emph{他}}
+            \rput[br]{*0}(-1,1){\emph{在}}
+            \rput[br]{*0}(1,1){\emph{花园}}
+            \rput[br]{*0}(2,1){\emph{散步}}
+           %--- charactors--
+            \rput[br]{*0}(-3,0){\emph{He}}
+            \rput[br]{*0}(-1,0){\emph{walks}}
+            \rput[br]{*0}(0,0){\emph{in}}
+            \rput[br]{*0}(1.3,0){\emph{the}}
+            \rput[br]{*0}(3,0){\emph{garden}}
+            %------ links ---------
+            \psline[linewidth=1pt,linearc=0]{->}(-3.2,1)(-3.3,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(-1.2,1)(-.3,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(.7,1)(1,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(.7,1)(2.7,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(1.5,1)(-1.3,.3)
+        \end{pspicture}
+        \end{center}
+
+        \begin{itemize}
+            \item input> 他 在 花园 散步 
+            \pause
+            \item 他在花园花园散步\textcolor{blue}{< Fertility Parameter}
+            \pause
+            \item He in the garden walks \textcolor{blue}{< Translation Model}
+            \pause
+            \item He walks in the garden\textcolor{blue}{< Language Model}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%--- word-for-word alignment -------------------------%
+\begin{frame}{Word-for-Word Alignments}
+    \begin{center}
+    \begin{pspicture}(-3,-.2)(3,1.3)
+        %------ chinese -------
+        \rput[br]{*0}(-3,1){\emph{他}}
+        \rput[br]{*0}(-1,1){\emph{在}}
+        \rput[br]{*0}(1,1){\emph{花园}}
+        \rput[br]{*0}(2,1){\emph{散步}}
+       %--- charactors--
+        \rput[br]{*0}(-3,0){\emph{He}}
+        \rput[br]{*0}(-1,0){\emph{walks}}
+        \rput[br]{*0}(0,0){\emph{in}}
+        \rput[br]{*0}(1.3,0){\emph{the}}
+        \rput[br]{*0}(3,0){\emph{garden}}
+        %------ links ---------
+        \psline[linewidth=1pt,linearc=0]{->}(-3.2,1)(-3.3,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(-1.2,1)(-.3,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(.7,1)(1,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(.7,1)(2.7,.3)
+        \psline[linewidth=1pt,linearc=0]{->}(1.5,1)(-1.3,.3)
+    \end{pspicture}
+    \end{center}
+    
+    \pause
+    \begin{itemize}
+        \item n(2|在):See how many times "在" connected to two English words
+        \item t(garden|花园):Count up all the English words generated by all the occurrences of "花园", and see how many of those words are "garden"
+    \end{itemize}
+
+\end{frame}
+
+%--- Estimating Parameter Values from Word-for-word Alignments
+\begin{frame}{Estimationg Parameter Values}
+    \begin{displaybox}{8cm}     % width of the box is 5cm 
+    \[ 
+        d(p_e|p_c,l_c,l_e) = 
+        \frac{dc(p_e|p_c,l_c,l_e)}
+        {
+            \sum_{j=1}^{N}{(j|p_c,l_c,l_e)}
+        }
+     \] 
+    \end{displaybox} 
+    \pause
+
+    \begin{displaybox}{8cm}     % width of the box is 5cm 
+    \[ 
+        n(i|c) = \frac{Count(c-connect-i-words)}
+            {
+                    Count(c-connections)
+            }
+     \] 
+    \end{displaybox} 
+    \pause
+
+    \begin{displaybox}{8cm}     % width of the box is 5cm 
+    \[ 
+        t(e|c) = \frac{c-connect-e}
+                    {Count(c-connections)}
+     \] 
+    \end{displaybox} 
+\end{frame}
+
+%---- Chicken and Egg-----------------------------------
+\begin{frame}{EM (Estimation-Maximiztion) algorithm}
+    \begin{center}
+    \begin{overprint} 
+        \onslide<1>
+        \begin{block}{Compute parameter estimates}
+        Given the alignment, we compute parameters
+            \begin{center}
+            \begin{pspicture}(-3,-.2)(3,1.3)
+                %------ chinese -------
+                \rput[br]{*0}(-3,1){\emph{他}}
+                \rput[br]{*0}(-1,1){\emph{在}}
+                \rput[br]{*0}(1,1){\emph{花园}}
+                \rput[br]{*0}(2,1){\emph{散步}}
+               %--- charactors--
+                \rput[br]{*0}(-3,0){\emph{He}}
+                \rput[br]{*0}(-1,0){\emph{walks}}
+                \rput[br]{*0}(0,0){\emph{in}}
+                \rput[br]{*0}(1.3,0){\emph{the}}
+                \rput[br]{*0}(3,0){\emph{garden}}
+                %------ links ---------
+                \psline[linewidth=1pt,linearc=0]{->}(-3.2,1)(-3.3,.3)
+                \psline[linewidth=1pt,linearc=0]{->}(-1.2,1)(-.3,.3)
+                \psline[linewidth=1pt,linearc=0]{->}(.7,1)(1,.3)
+                \psline[linewidth=1pt,linearc=0]{->}(.7,1)(2.7,.3)
+                \psline[linewidth=1pt,linearc=0]{->}(1.5,1)(-1.3,.3)
+            \end{pspicture}
+            \end{center}
+            n(2|花园) t(he|他) $\cdots$
+        \end{block}
+
+        \onslide<2,3,4>
+        \begin{block}{Compute Alignment Probabilities}
+            $$
+            \textcolor{blue}{P(a,f|e)} = \prod_{i=1}^{l}{
+                    \textcolor{red}{n}(ph_i | e_i)
+                }
+                *
+                \prod_{j=1}^{m}{
+                    \textcolor{red}{t}(f_j | e_j)
+                }
+                *
+                \prod_{j=1}^{m}{
+                    \textcolor{red}{d}(j | a_j, l, m)
+                }
+            $$
+            $$
+            \textcolor{red}{P(a|e,f)} = \frac{\textcolor{blue}{P(a,f|e)}}
+                            {\sum_{a}{P(a,f|e)}}
+            $$
+        \end{block}
+    \end{overprint}
+    \end{center}
+
+    \begin{center}
+    \begin{overprint}
+        \onslide<3>
+        \begin{alertblock}{Chicken and Egg}
+            Uh oh, what went wrong?
+        \end{alertblock}
+
+        \onslide<4>
+        \begin{block}{Chicken and Egg}
+            The EM algorithm can solve the problem.
+        \end{block}
+    \end{overprint}
+    \end{center}
+\end{frame}
+
+%----- last demo ---------------------------------------------
+\begin{frame}{SMT Word-Alignment Demo}
+    (一只狗,a dog), (狗,dog)
+    \begin{block}{Possible Alignments}
+        \begin{center}
+        \begin{tabular}{ l  l }
+        \textcircled{1}
+        %--- image 1 ----------------------
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(-1.4,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture} &
+        %--- image 2 ---------------------
+        \textcircled{2}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(1,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(-1.4,0.4)
+        \end{pspicture} \\
+        \hline
+        %--- image 3 ---------------------
+        \textcircled{3}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture}&
+
+        \end{tabular}
+        \end{center}
+    \end{block}
+    
+\end{frame}
+
+\begin{frame}{EM Process}
+    \begin{block}{Possible Alignments}
+        \begin{center}
+        \begin{tabular}{ l  l }
+        \textcircled{1}
+        %--- image 1 ----------------------
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(-1.4,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture} &
+        %--- image 2 ---------------------
+        \textcircled{2}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(1,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(-1.4,0.4)
+        \end{pspicture} \\
+        \hline
+        %--- image 3 ---------------------
+        \textcircled{3}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture}&
+        \end{tabular}
+        \end{center}
+    \end{block}
+    \begin{block}{Step 1. Set parameter values uniformly}
+        \begin{itemize}
+            \item t(a|一只)=1/2
+            \item t(dog|一只)=1/2
+            \item t(a|狗)=1/2
+            \item t(dog|狗)=1/2
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{EM Process}
+    \begin{block}{Possible Alignments}
+        \begin{center}
+        \begin{tabular}{ l  l }
+        \textcircled{1}
+        %--- image 1 ----------------------
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(-1.4,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture} &
+        %--- image 2 ---------------------
+        \textcircled{2}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(1,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(-1.4,0.4)
+        \end{pspicture} \\
+        \hline
+        %--- image 3 ---------------------
+        \textcircled{3}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture}&
+
+        \end{tabular}
+        \end{center}
+    \end{block}
+
+    \begin{block}{Step 2. Compute $P(a,f|e)$ for all alignments}
+        \begin{itemize}
+            \item \textcircled{1} $P(a, f|e) = 1/2 * 1/2
+                    = 1/4$
+            \item \textcircled{2} $P(a, f|e) = 1/2 * 1/2
+                    = 1/4$
+            \item \textcircled{3} $P(a,f|e)=1/2$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}{EM Process}
+    \begin{block}{Possible Alignments}
+        \begin{center}
+        \begin{tabular}{ l  l }
+        \textcircled{1}
+        %--- image 1 ----------------------
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(-1.4,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture} &
+        %--- image 2 ---------------------
+        \textcircled{2}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(-1,1){\emph{一只}}
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(-1.4,0){\emph{a}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(-1.4,1)(1,0.4)
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(-1.4,0.4)
+        \end{pspicture} \\
+        \hline
+        %--- image 3 ---------------------
+        \textcircled{3}
+        \begin{pspicture}(-2,-.2)(2,1.3)
+            \rput[br]{*0}(1,1){\emph{狗}}
+            \rput[br]{*0}(1,0){\emph{dog}}
+            \psline[linewidth=1pt,linearc=0]{->}(1,1)(1,0.4)
+        \end{pspicture}&
+
+        \end{tabular}
+        \end{center}
+    \end{block}
+
+    \begin{block}{Step 3. Normalize $P(a,f|e)$ values to yield $P(a|e,f)$ values}
+        \begin{itemize}
+            \item \textcircled{1} $P(a|e,f) =\frac{1/4}{2/4} = 1/2$
+            \item \textcircled{2} $P(a|e,f) = \frac{1/4}{2/4}= 1/2$
+            \item \textcircled{3} $P(a|e,f)=\frac{1/2}{1/2}= 1$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{EM Process}
+    \begin{block}{Step 4. Collect fractional counts}
+        \begin{itemize}
+            \item tc(a|狗)=1/2
+            \item tc(dog|狗)=1 + 1/2 = 3/2
+            \item tc(a|一只)=1/2
+            \item tc(dog|一只)=1/2
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{EM Process}
+    \begin{block}{Step 5. Normalize fractional counts to get revised parameter values.}
+        \begin{itemize}
+            \item t(a|狗)=$\frac{1/2}{4/2}$ = 1/4
+            \item t(dog|狗)=$\frac{3/2}{4/2}$ = 3/4
+            \item t(a|一只)=$\frac{1/2}{1}$ = 1/2
+            \item t(dog|一只)=$\frac{1/2}{1}$= 1/2
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{EM Process}
+\begin{center}
+    \begin{overprint}
+    \onslide<1>
+    \begin{block}{Repeating steps 2-5 many times}
+        \begin{itemize}
+            \item t(a|狗)=0.0001
+            \item t(dog|狗)=0.9999
+            \item t(a|一只)=0.9999
+            \item t(dog|一只)=0.0001
+        \end{itemize}
+    \end{block}
+
+    \onslide<2>
+    \begin{block}{Final Word Alignment}
+        \begin{itemize}
+            \item 一只->a
+            \item 狗->dog
+        \end{itemize}
+    
+    \end{block}
+    \end{overprint}
+\end{center}
+\end{frame}
+
+\begin{frame}{Summarize}
+
+    \begin{block}{Translation Sequence}
+        他 在 花园 散步 => He walks in the garden\\
+
+        \begin{center}
+        \begin{pspicture}(-3,-.2)(3,1.3)
+            %------ chinese -------
+            \rput[br]{*0}(-3,1){\emph{他}}
+            \rput[br]{*0}(-1,1){\emph{在}}
+            \rput[br]{*0}(1,1){\emph{花园}}
+            \rput[br]{*0}(2,1){\emph{散步}}
+           %--- charactors--
+            \rput[br]{*0}(-3,0){\emph{He}}
+            \rput[br]{*0}(-1,0){\emph{walks}}
+            \rput[br]{*0}(0,0){\emph{in}}
+            \rput[br]{*0}(1.3,0){\emph{the}}
+            \rput[br]{*0}(3,0){\emph{garden}}
+            %------ links ---------
+            \psline[linewidth=1pt,linearc=0]{->}(-3.2,1)(-3.3,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(-1.2,1)(-.3,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(.7,1)(1,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(.7,1)(2.7,.3)
+            \psline[linewidth=1pt,linearc=0]{->}(1.5,1)(-1.3,.3)
+        \end{pspicture}
+        \end{center}
+
+        \begin{itemize}
+            \item input> 他 在 花园 散步 
+            \pause
+            \item 他在花园花园散步\textcolor{blue}{< Fertility Parameter}
+            \pause
+            \item He in the garden walks \textcolor{blue}{< Translation Model}
+            \pause
+            \item He walks in the garden\textcolor{blue}{< Language Model}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+
+\begin{frame}{References}
+\begin{thebibliography}{10}
+\bibitem{Computational Linguistics Volume 16, Number 2, June 1990}[Peter F.Brown, John Cocke, Stephen A. Della Pietra, $\cdots$]
+\newblock A STATISTICAL APPROACH TO MACHINE TRANSLATION,June 1990
+\bibitem{prepared in connection with the JHU summer workshop}[Kevin Knight]
+\newblock A Statistical MT Tutorial Workbook, April 30, 1999
+\end{thebibliography}
+
+\end{frame}
+
+\begin{frame}{Thank You!}
+    Thank you for your listenning!
+\end{frame}
+
+\end{document}

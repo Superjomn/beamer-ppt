@@ -1,0 +1,96 @@
+\documentclass{beamer}
+\usepackage{ctex} %注意这个宏包
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{graphics,graphicx}
+\usepackage{pstricks,pst-node,pst-tree}
+%\usetheme{umbc4}
+%\usetheme[height=12mm]{Rochester}
+%\usetheme{Marburg}
+\usetheme{Berkeley}
+\useinnertheme{umbcboxes}
+\useinnertheme{rounded}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\CTEXoptions[today=old]
+%\setbeamercolor{beaver}{bg=violet!15,fg=black}  % redefine box color!
+
+\title{Reliable Optimised Flooding in Ad hoc Networks}
+\author{Chunwei Yan}
+\institute[PKUSZ]{
+\texttt{YanChunwei@outlook.com}
+}
+\date{\today}
+
+\begin{document}
+\section{Begin}
+% ------------- title page ----------------------------
+%--- the titlepage frame -------------------------%
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\subsection{Abstract}
+\begin{frame}{Abstract}
+
+\end{frame}
+\subsection{Basic Knowledge}
+
+\begin{frame}{Ad hoc Networks}
+\begin{definition}
+Ad hoc网是一种多跳的、无中心的、自组织无线网络，又称为多跳网（Multi-hop Network）、无基础设施网（Infrastructureless Network）或自组织网（Self-or-ganizing Network）。
+\end{definition}
+\begin{enumerate}
+    \item 整个网络没有固定的基础设施，每个节点都是移动的
+    \item 由于终端无线覆盖取值范围的有限性，两个无法直接进行通信的用户终端可以借助其它节点进行分组转发。
+    \item 每一个节点同时是一个路由器，它们能完成发现以及维持到其它节点路由的功能。 
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Ad hoc Networks}
+    \begin{center}
+    \includegraphics[height=140pt]{ad_hoc_network.jpg}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Unicast(单播)}
+    \begin{definition}
+        \begin{itemize}
+            \item a piece of information is sent from one point to another point. 
+            \item just one sender, and one receiver.
+        \end{itemize}
+    \end{definition}
+    $
+    \psmatrix[colsep=2cm,rowsep=1cm,mnode=circle]
+    1&2
+    \ncline{->}{1,1}{1,2}
+    \endpsmatrix
+    $
+\end{frame}
+
+\begin{frame}{Broadcast(广播)}
+    \begin{definition}
+        \begin{itemize}
+            \item a piece of information is sent from one point to all other points. 
+            \item just one sender, but the information is sent to all connected receivers.
+        \end{itemize}
+    \end{definition}
+    $
+    \psmatrix[colsep=2cm,rowsep=1cm,mnode=circle]
+    1&2\\
+    &4&5\\
+    6&7\\
+    \ncline{->}{1,1}{1,2}
+    \ncline{->}{1,1}{2,2}
+    \ncline{->}{1,1}{2,3}
+    \ncline{->}{1,1}{3,1}
+    \ncline{->}{1,1}{3,2}
+    \endpsmatrix
+    $
+
+\end{frame}
+
+
+\subsection{subsection}
+
+\end{document}
