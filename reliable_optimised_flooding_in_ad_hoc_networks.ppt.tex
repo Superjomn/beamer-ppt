@@ -4,6 +4,7 @@
 \usepackage{color}
 \usepackage{graphics,graphicx}
 \usepackage{pstricks,pst-node,pst-tree}
+\usepackage{listings}
 %\usetheme{umbc4}
 %\usetheme[height=12mm]{Rochester}
 %\usetheme{Marburg}
@@ -23,27 +24,69 @@
 \date{\today}
 
 \begin{document}
-\section{Begin}
 % ------------- title page ----------------------------
 %--- the titlepage frame -------------------------%
 \begin{frame}
   \titlepage
 \end{frame}
 
-\subsection{Abstract}
-\begin{frame}{Abstract}
-
+\section{Begin}
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
 \end{frame}
-\subsection{Basic Knowledge}
 
+
+\subsection{Abstract}
+\begin{frame}{Flooding}
+    \begin{block}{Blind Flooding}
+        \begin{itemize}
+        \pause
+        \item remarkably robust and is able to reliably deliver messages
+        \pause
+        \item results in the broadcast storm problem
+        \end{itemize}
+    \end{block}
+
+        \pause
+    \begin{block}{Optimised Flooding}
+        \begin{itemize}
+        \pause
+        \item limits the broadcast storm problem
+        \pause
+        \item reduces the inherent level of redundancy
+        \end{itemize}
+    \end{block}
+\end{frame}
+\begin{frame}{RMST Flooding}
+    \begin{block}{RMST--Reliable Minimum Spanning Tree}
+        \begin{itemize}
+        \pause
+        \item replace broadcast transmissions with unicast transmissions
+        \pause
+            \begin{itemize}
+            \item link layer acknowledgement and retransmission
+            \end{itemize}
+        \item improve the reliability of a flood
+        \pause
+        \item reduce the broadcast storm problem
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\subsection{Basic Knowledge}
 \begin{frame}{Ad hoc Networks}
+        \pause
 \begin{definition}
-Ad hoc网是一种多跳的、无中心的、自组织无线网络，又称为多跳网（Multi-hop Network）、无基础设施网（Infrastructureless Network）或自组织网（Self-or-ganizing Network）。
+An ad hoc network is a collection of wireless mobile nodes forming a temporary network lacking tranditional centralised administration
 \end{definition}
+        \pause
 \begin{enumerate}
-    \item 整个网络没有固定的基础设施，每个节点都是移动的
-    \item 由于终端无线覆盖取值范围的有限性，两个无法直接进行通信的用户终端可以借助其它节点进行分组转发。
-    \item 每一个节点同时是一个路由器，它们能完成发现以及维持到其它节点路由的功能。 
+    \item 不固定,移动性
+        \pause
+    \item 相互协作,远距离传递转发
+        \pause
+    \item 每一个节点同时是一个路由器
 \end{enumerate}
 \end{frame}
 
@@ -54,12 +97,14 @@ Ad hoc网是一种多跳的、无中心的、自组织无线网络，又称为�
 \end{frame}
 
 \begin{frame}{Unicast(单播)}
+        \pause
     \begin{definition}
         \begin{itemize}
             \item a piece of information is sent from one point to another point. 
             \item just one sender, and one receiver.
         \end{itemize}
     \end{definition}
+        \pause
     $
     \psmatrix[colsep=2cm,rowsep=1cm,mnode=circle]
     1&2
@@ -69,12 +114,15 @@ Ad hoc网是一种多跳的、无中心的、自组织无线网络，又称为�
 \end{frame}
 
 \begin{frame}{Broadcast(广播)}
+        \pause
     \begin{definition}
         \begin{itemize}
             \item a piece of information is sent from one point to all other points. 
+        \pause
             \item just one sender, but the information is sent to all connected receivers.
         \end{itemize}
     \end{definition}
+        \pause
     $
     \psmatrix[colsep=2cm,rowsep=1cm,mnode=circle]
     1&2\\
@@ -87,10 +135,88 @@ Ad hoc网是一种多跳的、无中心的、自组织无线网络，又称为�
     \ncline{->}{1,1}{3,2}
     \endpsmatrix
     $
+\end{frame}
+
+\section{Proposed Reliable Flooding Mechanism}
+\begin{frame}{Broadcast Flood Problem}
+\includegraphics[height=130pt]{broadcast_flood_problem.png}
+\end{frame}
+
+\subsection{RMST}
+\begin{frame}{RMST--Reliable Minimum Spanning Tree}
+RMST is a reliable and optimised flooding mechanism taht computes a local MST based upon one hop neighbour knowledge in a distributed manner.
+\end{frame}
+\begin{frame}{RMST}
+        \pause
+\begin{center}
+    \includegraphics[height=100pt]{rmst.png}
+\end{center}
+    \begin{itemize}
+        \pause
+    \item the centralised MST $\sqsubseteq$ distributed MST 
+        \pause
+    \item the distributed MST results in a connected graph with 
+        \begin{itemize}
+        \pause
+        \item a neighbour degree greater than one but less than six 
+        \pause
+        \item an average neighbour degree of less than 2.04 nodes
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithm}
+Algorithm RMST(message)\\
+    \quad if not seen message before\\
+            \quad\quad BSET <- MST(!-hop Neighbours)\\
+            \quad\quad i <- previous broadcasting node\\
+            \quad\quad H <- nodes that recieved previous broadcast\\
+            \quad\quad BSET <- BSET - i\\
+            \quad\quad BSET <- BSET - H\\
+            \quad\quad for each node i in BSET\\
+                \quad\quad \quad\quad $T_{power}$ <- $transmission_{power}(i)$\\
+                \quad\quad \quad\quad $Unicast(Message, T_{power})$\\
 
 \end{frame}
 
+\subsection{Unicast Transmission Mechanism}
 
-\subsection{subsection}
+\begin{frame}{Unicast Transmission Mechanism}
+\begin{center}
+    \includegraphics[height=80pt]{arq.png}
+\end{center}
+        \pause
+\begin{itemize}
+\item unicast transmission utilises a frame retransmission mechanism at the MAC layer
+        \pause
+\item positive acknowledge ment scheme(ARQ)
+        \pause
+\item a transmitting node will retransmit a frame if it does not receive a positive acknowledgement from the destination node
+\end{itemize}
+\end{frame}
+
+
+\section{Conclusions}
+\subsection{Broadcast Reachability}
+\begin{frame}{Broadcast Reachability}
+    \begin{center}
+    \includegraphics[height=100pt]{f1.png}
+    \end{center}
+    bind flooding and RMST provide the best delivery performance and are only slightly affected by background traffic.
+\end{frame}
+
+\subsection{Energy consumed}
+\begin{frame}{Energy consumed}
+    \begin{center}
+    \includegraphics[height=100pt]{f2.png}
+    \end{center}
+    It shows the power consumed by each mechanism to complete a flood.\\
+    RMST utilises more energy to complete a flood than LMSTflood.
+\end{frame}
+
+\begin{frame}{Goodbye}
+    \zihao{0}
+    Tankyou!
+\end{frame}
 
 \end{document}
