@@ -10,6 +10,7 @@
 %\usetheme{Marburg}
 \usetheme{Berkeley}
 \useinnertheme{umbcboxes}
+\definecolor{almond}{rgb}{0.94, 0.87, 0.8}
 %\useinnertheme{rounded}
 \CTEXoptions[today=old]
 %\setbeamercolor{beaver}{bg=violet!15,fg=black}  % redefine box color!
@@ -39,9 +40,13 @@
 \frametitle{实验内容}
     \begin {itemize} 
     \item 网页模板检测
+    \pause
     \item SST (Site Style Tree) 算法
-    \item 自行爬取网页测试
+    \pause
+    \item 爬取网页测试
+    \pause
     \item 可视化的测试结果
+    \pause
     \end{itemize}
 \end{frame}
 
@@ -50,11 +55,15 @@
     \begin{itemize}
     \item Python2.7
         \begin{description}[Second Item]
+        \pause
         \item [PyQuery] 网页解析
+    \pause
         \item [Numpy] 数值计算
         \end{description}
+    \pause
     \item Linux Mint
-    \item 数据来源: news.MSN.com
+    \pause
+    \item 数据来源: news.MSN.com, news.yahoo.com
     \end{itemize}
 \end{frame}
 
@@ -63,6 +72,12 @@
     \begin{center}
     \includegraphics[height=5cm]{sst_structure.png}
     \end{center}
+    \pause
+    \begin{itemize}
+        \item element node , style node
+    \pause
+        \item {\color{blue} leaf node}
+    \end{itemize}
 \end{frame}
 
 \subsection{具体实现}
@@ -72,15 +87,18 @@
         \onslide<1>
         \begin{block}{数据结构}
             \begin{description}[Second Item]
-            \item [ElementNode] 普通节点
-            \item [StyleNode] 父节点的直系子节点的起始标签
-            \item [DataNode] ElementNode的feature内容
+                \item [ElementNode] 普通节点
+                \item [StyleNode] 父节点的直系子节点的起始标签
+                \item [DataNode] ElementNode的feature内容
+                \item [StyleTree] 包含一个Body-ElementNode
             \end{description}
         \end{block}
 
         \onslide<2>
         \begin{block}{Demo}
+            \begin{center}
             \includegraphics[height=5cm]{../dot/data_structure_demo.pdf}
+            \end{center}
         \end{block}
     \end{overprint}
     \end{center}
@@ -103,18 +121,15 @@
 
         \onslide<2>
         \begin{block}{Demo}
+            \begin{center}
             \includegraphics[height=5cm]{../dot/data_structure_demo.pdf}
+            \end{center}
         \end{block}
     \end{overprint}
     \end{center}
 \end{frame}
-\begin{frame}{数据结构}
-   demo 
-   % 一个简单的演示
-\end{frame}
-
-\subsection{算法改进}
-\begin{frame}{存在问题}
+\subsection{算法思考}
+\begin{frame}{存在问题?}
     %介绍计算方法
     %存在问题
     \begin{block}{Element(非leaf node)权重计算}
@@ -126,16 +141,62 @@
         CompImp(S_i) = \frac{
                 \sum_{j=1}^{k}{CompImp(E_j)}
             } {k}
+        $$
+        \pause
+        $$
+        NodeImp(E) = 
+        \begin{cases}
+            \begin{array}{ll}
+                -\sum_{i=1}^{l}{p_i\log_{m}{p_i}} & if \quad m>1\\
+                1                                   & if \quad m=1\\
+            \end{array}    
+        \end{cases}
         $$}
+        \pause
         \begin{description}
         \item [$NodeImp(E)$] 拥有的风格样式(StyleNode)的熵
         \item [$CompImp(S_i)$] 子孙节点权重的传递
         \end{description}
-
-        \begin{alertblock}{忽略非叶子节点的feature}
-        \end{alertblock}
     \end{block}
 \end{frame}
+
+\begin{frame}{存在问题?}
+    %介绍计算方法
+    %存在问题
+    \begin{block}{Element(非leaf node)权重计算}
+        {\zihao{6}{
+        $$
+        CompImp_{former}(E) = (1-r')NodeImp(E) + r' \sum_{i=1}^{l}{p_iCompImp(s_i)}
+        $$}
+        $$
+        CompImp(S_i) = \frac{
+                \sum_{j=1}^{k}{CompImp(E_j)}
+            } {k}
+        $$
+        $$
+        NodeImp(E) = 
+        \begin{cases}
+            \begin{array}{ll}
+                -\sum_{i=1}^{l}{p_i\log_{m}{p_i}} & if \quad m>1\\
+                1                                   & if \quad m=1\\
+            \end{array}    
+        \end{cases}
+        $$}
+        \begin{center}
+        \begin{overprint}
+        \onslide<1>
+        \begin{description}
+        \item [$NodeImp(E)$] 拥有的风格样式(StyleNode)的熵
+        \item [$CompImp(S_i)$] 子孙节点权重的传递
+        \end{description}
+        \onslide<2>
+        \begin{alertblock}{忽略非叶子节点的feature}
+        \end{alertblock}
+        \end{overprint}
+        \end{center}
+    \end{block}
+\end{frame}
+
 
 \begin{frame}{问题演示}
     \begin{center}
@@ -162,7 +223,7 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{算法改进}
+\begin{frame}{算法思考}
     \begin{block}{重要性分配}
     \begin{center}
     \begin{overprint}
@@ -203,14 +264,30 @@
 \end{frame}
 
 \section{测试及结果}
-\begin{frame}{测试环境}
-    %一个简单的树形图
-    news.MSN.com 207页
-\end{frame}
+
 \subsection{SST结构实现演示}
 \begin{frame}{SST结构测试}
     %一个简单的树形图
     \includegraphics[height=2cm]{sst_self_2.png}
+\end{frame}
+
+\begin{frame}{测试环境}
+    %一个简单的树形图
+    \begin{enumerate}
+        \item news.MSN.com 650页 4轮
+        \begin{itemize}
+            \item 0.33
+            \item 0.2
+            \item 0.4
+            \item 0.5
+        \end{itemize}
+                \pause
+        \item news.yahoo.com 667页 2轮 对比
+        \begin{itemize}
+            \item 原始算法
+            \item 为普通element node加入features权重
+        \end{itemize}
+    \end{enumerate}
 \end{frame}
 
 \subsection{实例演示}
@@ -218,28 +295,57 @@
     %实验数据 图片展示
     \fbox{from}
     \begin{center}
-    \includegraphics[height=6cm]{html_source_1.png}
+    \includegraphics[height=6cm]{old_page.png}
     \end{center}
 \end{frame}
-\begin{frame}{实验数据}
+\begin{frame}{实验数据1}
     %实验数据 图片展示
-    \fbox{to}
+    \fbox{to} $t= 0.33$
     \begin{center}
-    \includegraphics[height=6cm]{html_source_2.png}
+    \includegraphics[height=6cm]{0.33_image}
+    \end{center}
+\end{frame}
+\begin{frame}{实验数据1}
+    %实验数据 图片展示
+    \fbox{to} $t= 0.2$
+    \begin{center}
+    \includegraphics[height=6cm]{0.2_image}
+    \end{center}
+\end{frame}
+\begin{frame}{实验数据1}
+    %实验数据 图片展示
+    \fbox{to} $t= 0.4 or 0.5$
+    \begin{center}
+    \includegraphics[height=6cm]{0.4_0.5_image}
+    \end{center}
+\end{frame}
+\begin{frame}{实验数据2}
+    %实验数据 图片展示
+    \fbox{from} news.yahoo, 原始算法 $t=0.33$
+    \begin{center}
+    \includegraphics[height=6cm]{yahoo_news1.5_image}
+    \end{center}
+\end{frame}
+\begin{frame}{实验数据2}
+    %实验数据 图片展示
+    \fbox{from} news.yahoo, 加入feature
+    \begin{center}
+    \includegraphics[height=6cm]{yahoo_news_adddata.5_image}
     \end{center}
 \end{frame}
 
 \section{End}
-\begin{frame}{不足}
+\begin{frame}{不足及后续}
     \begin{enumerate}
-    \item 关于性能
     \item html解析 (PyQuery or Webkit ...?)
     \item 评测的严谨性
+    \item 算法思考
     \end{enumerate}
 \end{frame}
-
 \begin{frame}{Goodbye}
-    \fbox{\zihao{1} Tankyou \& Demo}
+    \begin{center}
+    \fbox{\zihao{1} Tankyou }
+    \end{center}
 \end{frame}
 
 \end{document}
