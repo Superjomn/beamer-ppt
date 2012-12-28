@@ -1,0 +1,294 @@
+\documentclass[a4paper]{ctexart}
+\author{Chunwei Yan}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\title{极限和积分部分公式加强}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\begin{document}
+    \maketitle
+%---------------------- start document -------------------
+
+\section{极限}
+
+\subsection{几个重要的等价无穷小}
+\paragraph{$x \rightarrow 0$}
+
+%--table
+\begin{center}
+\renewcommand\arraystretch{1.5}
+    \begin{tabular}{  l  l  l  l }
+        %----------
+        $\sin{x}\sim$ & 
+        \underline{\hbox to 30mm{}} &
+        $(1+x)^\frac{1}{x}=$ &
+        \underline{\hbox to 30mm{}} \\
+        %----------
+        $\sin{x} \sim$  &
+        \underline{\hbox to 30mm{}} &
+        $\tan{x} \sim$   &
+        \underline{\hbox to 30mm{}} \\
+        %----------
+        $1 - \cos{x} \sim $         &
+        \underline{\hbox to 30mm{}} &
+        $e^x - 1 \sim$              &
+        \underline{\hbox to 30mm{}} \\
+        $\ln{1+x} \sim$             &
+        \underline{\hbox to 30mm{}} &
+        $(1+x)^a - 1 \sim$          &
+        \underline{\hbox to 30mm{}} \\
+        $\arcsin{x} \sim$           &
+        \underline{\hbox to 30mm{}} &
+        $\arctan{x} \sim$           &
+        \underline{\hbox to 30mm{}} \\
+        $a^x - 1 \sim$              &
+        \underline{\hbox to 30mm{}} &
+        $x^m + x^k(k>m>0) \sim$       &
+        \underline{\hbox to 30mm{}} \\
+    \end{tabular}
+\end{center}
+
+\subparagraph{几个极限}
+\begin{center}
+\renewcommand\arraystretch{1.5}
+    \begin{tabular}{  l  l  l  l }
+    %-------
+    $\lim_{n \rightarrow \infty} { \sqrt[n]{n}} =$   &
+        \underline{\hbox to 30mm{}}                  &
+    $\lim_{x \rightarrow 0^+}
+          { x^\delta(\ln{x})^k }
+        =$                                           &
+        \underline{\hbox to 30mm{}} \\
+    $\lim_{x \rightarrow +\infty}
+        {
+            x^k e^{-\delta x}
+        }$                                           &
+        \underline{\hbox to 30mm{}}                  & 
+        (常数 $k>0$ \quad $\delta >0$)               &
+        \\
+    \end{tabular}
+\end{center}
+
+
+\section{初等函数的导数公式}
+\textcolor{red}{\textbf{复习全书P41 \quad 公式2}}
+
+\begin{center}
+\renewcommand\arraystretch{1.5}
+    \begin{tabular}{  l  l  l  l }
+        $C'=$                           &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{0dx}=$                    &
+        \underline{\hbox to 30mm{}}     \\
+
+
+        $(x^a)'=$                       &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{ ax^{a-1} dx}=$           &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(a^x)'=$                        &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{ a^x\ln{a}dx}=$            &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(e^x)'=$                       &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{e^x dx}=$                  &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\log{a}{x})'=$                &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\frac{1}{x\ln{a}}dx}=$    &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\ln{x})'=$                    &
+        \underline{\hbox to 30mm{}}     &
+        $\int{\frac{1}{x}dx}=$          &
+        \underline{\hbox to 30mm{}}     \\
+
+
+        %--三角函数
+        $(\sin{x})'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\cos{x}dx}=$              &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\cos{x})'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{-\sin{x}dx}=$             &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\tan{x})'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\sec{x}^2dx} = $          &
+        \underline{\hbox to 30mm{}}     \\
+
+        ${\cot{x}}'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $-\int{\csc{x}^2dx}=$           &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\sec{x})'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\sec{x}\tan{x}dx}=$       &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\csc{x})'=$                   &
+        \underline{\hbox to 30mm{}}     & 
+        $-\int{\csc{x}\cot{x}dx}=$      &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\arcsin{x})'=$                &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\frac{1}{\sqrt{1-x^2}}dx}=$&
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\arccos{x})'=$                &
+        \underline{\hbox to 30mm{}}     & 
+        $-\int{\frac{1}{\sqrt1-x^2}dx}=$&
+        \underline{\hbox to 30mm{}}     \\
+
+        $(\arctan{x})'=$                &
+        \underline{\hbox to 30mm{}}     & 
+        $\int{\frac{1}{1+x^2}dx}=$      &
+        \underline{\hbox to 30mm{}}     \\
+
+        $(arccotx)'=$                &
+        \underline{\hbox to 30mm{}}     & 
+        $-\int{\frac{1}{1+x^2}dx}=$     &
+        \underline{\hbox to 30mm{}}     \\
+
+        $\int{\frac{1}{\cos^2{x}}dx}=$  &
+        \underline{\hbox to 30mm{}}     & 
+        $-\int{\frac{1}{\sin^2{x}}dx}=$ &
+        \underline{\hbox to 30mm{}}     \\
+
+    \end{tabular}
+\end{center}
+
+
+\subsection{几个常见初等函数的n阶导数公式}
+    \textcolor{red}{\textbf{复习全书P42 \quad (5)}}
+\begin{multicols}{2}
+    $(e^{ax})^{(n)}=$
+        \underline{\hbox to 30mm{}}     \\
+    $(\sin{ax})^{(n)}=$
+        \underline{\hbox to 30mm{}}     \\
+    $(\cos{ax})^{(n)}=$
+        \underline{\hbox to 30mm{}}     \\
+    $\ln^{(n)}{(1+x)}=$
+        \underline{\hbox to 30mm{}}     \\
+    $((1+x)^\alpha)^{(n)}=$
+        \underline{\hbox to 30mm{}}     \\
+\end{multicols}
+
+\subsection{幂指函数$u(x)^{v(x)}$的求导法则与公式}
+    \textcolor{red}{\textbf{复习全书P42 \quad (7)}}\\
+    $u(x)^{v(x)}$
+        \underline{\hbox to 30mm{}}     \\
+
+\subsection{反函数的一阶及二阶导数公式}
+    \textcolor{red}{\textbf{复习全书P42 \quad (8)}}\\
+设$y=f(x)$可导,且$f'(x)\neq 0$, 则存在反函数 $x=\varphi (y)$, 且\\
+$$
+\frac{dx}{dy} = 
+    \frac{1}{
+        \frac{dy}{dx}
+        } $$
+即\\
+$$
+\varphi'(y) = \frac{1}{f'(x)}
+$$
+若$y=f(x)$存在二阶导数,则\\
+$ \varphi''(y) = $
+        \underline{\hbox to 30mm{}}     \\
+
+\section{不定积分与定积分的计算}
+\subsection{基本积分公式}
+
+\begin{center}
+\renewcommand\arraystretch{1.5}
+    \begin{tabular}{  l  l  l  l }
+    %------------
+    $\int{x^\alpha dx}=$        &
+    \underline{\hbox to 30mm{}} &
+    $\int{\frac{1}{x}dx}=$      &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{a^xdx}=$              &
+    \underline{\hbox to 30mm{}} &
+    $\int{e^xdx}=$              &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\sin{x}dx}=$          &
+    \underline{\hbox to 30mm{}} &
+    $\int{\cos{x}dx}=$          &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\tan{x}dx}=$          &
+    \underline{\hbox to 30mm{}} &
+    $\int{\cot{x}dx}=$          &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\sec{x}dx}=$          &
+    \underline{\hbox to 30mm{}} &
+    $\int{\csc{x}dx}=$          &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\sec^2{x}dx}=$        &
+    \underline{\hbox to 30mm{}} &
+    $\int{\csc^2{x}dx}=$        &
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\frac{1}{a^2+x^2}dx}=$&
+    \underline{\hbox to 30mm{}} &
+    $\int{\frac{1}{a^2-x^2}dx}=$&
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{\frac{1}{\sqrt{a^2-x^2}}dx}=$&
+    \underline{\hbox to 30mm{}} &
+    $\int{\frac{1}{\sqrt{x^2 \pm a^2}}dx}=$&
+    \underline{\hbox to 30mm{}} \\
+
+    \end{tabular}
+\end{center}
+
+\section{基本积分方法}
+\subsection{不定积分的凑微分求积分法}
+    \textcolor{red}{\textbf{复习全书P89 \quad 二}}
+\begin{multicols}{2}
+$\int { f(ax+b)dx= } $
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(ax^2 + bx +c)(2ax + b)dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\ln{x})\frac{dx}{x}}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\sqrt{x})\frac{dx}{\sqrt{x}}dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\sin{x})\cos{x}dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\cos{x})\sin{x}dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\tan{x})\sec^2{x}dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\arcsin{x})\frac{dx}{\sqrt{1-x^2}}dx}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+    $\int{f(\arctan{x})\frac{dx}{1+x^2}}=$
+    \underline{\hbox to 30mm{}} \\
+    %------------
+\end{multicols}
+%---------------------- end document -------------------
+\end{document}
+

@@ -1,0 +1,39 @@
+void bubble_sort(int array[], int n)
+{
+    int i, j, tmp;
+    i=0;
+    outer_loop:
+        if i==n-1 goto output
+        i++
+        j = i + 1
+
+    inner_loop:
+        if j==n goto outer_loop
+        get a arr[i]
+        get b arr[j]
+        if a>b:
+            tem = b
+            array[j] = a
+            array[i] = tem
+        j++
+
+    output:
+        output the array
+
+
+
+
+
+    for(i = 0; i < n -1; i++)
+    {
+        for(j = i + 1; j < n; j++)
+        {
+            if(array[i] > array[j])
+            {
+                tmp = array[j];
+                array[j] = array[i];
+                array[i] = tmp;
+            }
+        }
+    }
+}

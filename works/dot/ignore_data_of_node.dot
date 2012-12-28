@@ -1,0 +1,20 @@
+graph graphname {
+    label="Style Tree"
+    div[label="div#content{ElementNode}"]
+    data_div[label="DataNode" style=filled, color=lightgray]
+    stylenode[label="<p><p>{StyleNode}" , shape=box, style=filled, color=lightblue]
+    e1[label="<p>{ElementNode}"]
+    e2[label="<p>{ElementNode}"]
+    data_e1[label="DataNode" style=filled, color=".7 .3 1.0"]
+    data_e2[label="DataNode" style=filled, color=".7 .3 1.0"]
+
+    div -- data_div[style=dotted]
+    div -- stylenode
+
+    stylenode -- e1
+    stylenode -- e2
+    e1 -- data_e1
+    e2-- data_e2
+
+}
+

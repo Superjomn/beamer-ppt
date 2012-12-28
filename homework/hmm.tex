@@ -1,0 +1,56 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{hyperref}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{严春伟}
+\title{隐式马尔科夫模型}
+\begin{document}
+    \maketitle
+
+\section{前言}
+\par 
+隐马尔科夫模型(hidden Markov model, HMM)是一种统计学习模型，可以用于标注问题。隐马尔科夫模型在序列化的数据的处理中有比较成熟的应用，如:
+\begin{itemize}
+\item 语音识别
+\item 自然语言处理
+\item 生物信息
+\item 模式识别
+\end{itemize}
+\par
+本文将会论述隐马尔科夫的基本问题，如定义，解决问题，基本算法等，此外，本文还会论述HMM在著名的中文分词库ICTCLAS中的应用原理。
+
+\section{基本概念}
+\subsection{定义}
+\paragraph{隐马尔科夫模型(HMM)} 描述一个隐藏的马尔科夫链生成不可观察的状态(state)随机序列，在由各个状态生成一个观测而产生观测随机序列的过程。
+\par
+HMM的确定因素：
+\begin{enumerate}
+\item 初始状态分布 $\pi$
+\item 状态转移概率分布 $A$
+\item 观测概率 $B$
+\end{enumerate}
+
+\paragraph{隐马尔科夫的要素}
+\begin{enumerate}
+\item N,表示模型中的状态数目
+\item M,表示模型中每个状态不同的观察符号
+\item A,状态转移概率分布。$A=\{a_{ij}\}$
+    \begin{equation}
+    a_{ij} = P(q_t = S_j | q_{t-1} = Sj) \quad 1\lei, j\le N     
+    \end{equation}
+\item B,观察字符在状态j时的概率分布,$B=\{b_j(k)\}$,其中
+    \begin{equation}
+    b_j(k) = P(v_k|q_t = S_j) \quad 1\le j \le N, 1 \le k \le M
+    \end{equation}
+\end{enumerate}
+
+\section{HMM的概率计算}
+\section{HMM的系数学习}
+\section{HMM在ICTCLAS中的应用}
+
+
+
+
+\end{document}

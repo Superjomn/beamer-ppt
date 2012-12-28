@@ -1,0 +1,26 @@
+    .data
+string1:.asciiz "hello1\n"
+string2:.asciiz "hello1\n"
+string3:.asciiz "hello1\n"
+
+    .text
+main:
+    la      $a0, string1
+    jal     output_string
+
+    la      $a0, string2
+    jal     output_string
+
+    la      $a0, string3
+    jal     output_string
+
+    jr     $ra
+
+    
+
+output_string:
+    li      $v0, 4
+    syscall
+    jr       $ra
+    
+    

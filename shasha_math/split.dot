@@ -1,0 +1,12 @@
+graph graphname {
+    node[shape=plaintext]
+    z -- x
+    z -- y
+    a[label=x]
+    b[label=y]
+    a -- a
+    b -- b
+    f -- z
+    f -- a
+    f -- b
+}

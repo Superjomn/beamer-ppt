@@ -1,0 +1,20 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{作业一}
+\begin{document}
+    \maketitle
+%---content here----
+\section{主要思路}
+题目中限制了获取全局图的可能，磁盘只能够提供一节点及其neighbour的信息。\\
+如此，我们可以采用局部计算PageRank的方法：
+$$
+    
+$$
+
+
+\end{document}
+
+

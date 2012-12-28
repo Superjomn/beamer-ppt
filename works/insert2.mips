@@ -1,0 +1,85 @@
+array:.space 1024     #开辟数组空间  
+input_number_msg:.asciiz "Please input number of integers: "       
+input_integer_msg:.asciiz "Please input integers to be sorted: "   
+output_integer_msg:.asciiz "The sorted integers are: "             
+    
+.text  
+main:  
+    la $a0,input_number_msg     #提示输入待排序整数数目  
+    li $v0,4  
+    syscall  
+    li $v0,5                  
+    syscall  
+    la $t6,array  
+    move $t7,$zero     #初始化t7，用于循环计数  
+    move $t8,$v0     #t8用于存放待排序整数数目  
+input:  
+    la $a0,input_integer_msg     #提示输入待排序整数  
+    li $v0,4  
+    syscall  
+  
+    li $v0,5  
+    syscall  
+  
+    move $t0,$t7  
+    mul $t0,$t0,4  
+    addu $t1,$t0,$t6  
+    sw $v0,0($t1)  
+  
+    addi $t7,$t7,1  
+    blt $t7,$t8,input     #输入待排序整数，直至达到t8中的给定数目  
+      
+    move $t2,$zero     #t2用于插入排序的外层循环计数  
+insertion_sort:  
+    addi $t2,$t2,1     #i=i+1  
+    bge $t2,$t8,output #若循环次数达到给定整数数目，跳转至输出  
+      
+    mul $t1,$t2,4  
+    addu $t1,$t1,$t6  
+    lw $t3,0($t1)     #t3=array[i]  
+  
+    sub $t4,$t2,1  
+    mul $t4,$t4,4  
+    addu $t4,$t4,$t6  
+    lw $t4,0($t4)     #t4=array[i-1]       
+  
+    bge $t3,$t4,insertion_sort     #如果array[i]>=array[i-1]，检查数组的下一个元素值  
+    move $t0,$t3                   #否则，将t3的值设为key，存入t0  
+    sw $t4,0($t1)     #array[i]=array[i-1]  
+  
+    sub $t3,$t2,2     #j=i-2  
+inner_loop:  
+    mul $t4,$t3,4  
+    addu $t4,$t4,$t6  
+    lw $t4,0($t4)     #t4=array[j]  
+    bge $t0,$t4,backspace     #如果key>=array[j]，array[j+1]=key  
+    addi $t5,$t3,1            #否则，array[j+1]=array[j]      
+    mul $t5,$t5,4  
+    addu $t5,$t5,$t6  
+    sw $t4,0($t5)  
+       
+    sub $t3,$t3,1            #j=j-1  
+    beq $t3,-1,backspace     #如果j==-1，array[j+1]=key  
+    b inner_loop  
+backspace:  
+    addi $t3,$t3,1  
+    mul $t3,$t3,4  
+    addu $t3,$t3,$t6  
+    sw $t0,0($t3)     #array[j+1]=key  
+    blt $t2,$t8,insertion_sort     #如果i<t8，检查下一个元素值          
+output:  
+    la $a0,output_integer_msg     #输出排序后的整数  
+    li $v0,4  
+    syscall  
+    move $t7,$zero    
+print_loop:  
+    move $t0,$t7  
+    mul $t0,$t0,4  
+    addu $t1,$t0,$t6  
+    lw $a0,0($t1)  
+    li $v0,1  
+    syscall  
+    addi $t7,$t7,1  
+    blt $t7,$t8,print_loop  
+  
+    jr $ra 

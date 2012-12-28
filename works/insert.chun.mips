@@ -1,0 +1,74 @@
+#------------------------------------------
+#   Chunwei Yan     2012/10/19
+#------------------------------------------
+    .data
+array:.space 1024
+datas_1:.asciiz "3745809621"
+datas_2:.asciiz "0123456789"
+datas_3:.asciiz "9876543210"
+begin_assign_data_message:.asciiz "\n begin to trans ascii string to int array\n"
+
+    .text
+main:
+    la      $t6, array           # array address 
+
+data_start:
+    la      $s1, datas_1         #address of datas
+    li      $t1, 10              # N
+    li      $t0, 0               # i
+    li      $t2, 0               #tem address
+    
+    # output message
+    la      $a0, begin_assign_data_message
+    li      $v0, 4
+    syscall
+
+loop:
+    bne     $t0, $t1, data_trans
+    #return 
+
+data_trans:
+    addu    $t2, $s1, $t0       #get tem index of datas
+    lb      $a0, 0($t2)
+    addi    $a0, $a0, -48       #trans ascii to int
+                                #a0, the data
+    li      $t4, 0              # j inner tem index
+
+inner_insert_loop:
+    bne     $t4, $t0, data_append_to_sorted
+    #assign the data to right pos
+    addu    $t2, $t6, $t0       #append data to array
+    sb      $a0, 0($t2)         
+
+data_append_to_sorted:          #append data to an sorted array
+    #bne     $t4, $t0, data_append_to_sorted
+                                #if j != i loop
+    addu    $t2, $t6, $t4       #get address of tem element of array 
+    lb      $t5, 0($t2)         #$t5 is current element to compare
+    slt     $s0, $t5, $a0       #if data > current then s0 = 0
+    addi    $t4, 1              #j += 1
+    j       loop                #return loop
+
+rerange_array_following_datas:
+    
+
+
+
+
+
+
+    
+    
+    addi    $t0, $t0, 1         # i += 1
+    blt     $t0, $t1, data_output   #while
+
+insertion_sort:
+
+
+
+
+
+
+
+
+

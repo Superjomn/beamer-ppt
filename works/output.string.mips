@@ -1,0 +1,37 @@
+    .text
+main:
+    la $s1, datas_1       #load the address of hello_msg into $a0
+    move $a0, $s1
+    li $v0, 4
+    syscall
+
+data_start:
+    li $t1, 10              # N
+    li $t0, 0               # i
+    li $t2, 0               #tem address
+    
+    # output message
+    la $a0, begin_output_message
+    li $v0, 4
+    syscall
+
+
+data_output:
+    addu $t2, $s1, $t0
+    lb $a0, 0($t2)
+    addi $a0, $a0, -48
+    li $v0, 1               #output
+    syscall
+
+    addi $t0, $t0, 1        # i += 1
+
+    blt $t0, $t1, data_output   #while
+
+
+    jr $ra
+
+    .data
+datas_1:.asciiz "3745809621"
+begin_output_message:.asciiz "\n begin to output data\n"
+
+    

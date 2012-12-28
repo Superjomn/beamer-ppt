@@ -1,0 +1,306 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{color}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]
+  {FangSong}
+
+\author{Chunwei Yan}
+\title{全书解答4}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+%---content here----
+\section{前言}
+\par
+现在开始做真题，同时，可以对着考纲，把每个知识点落实一下。 好好积累，多记忆，抓重点题型.
+\section{充分条件与必要条件的区别}
+这里说一下
+如$a \rightarrow b$
+则，我们说
+\begin{enumerate}
+    \item a是b的充分条件(a可以推出b) 
+    \begin{enumerate}
+        \item a成立，则b必然成立
+    \end{enumerate}
+    \item b是a的必要条件(a可以推出b)
+    \begin{enumerate}
+        \item b是a的前提条件
+        \item b成立，a不一定成立；但b不成立，则a肯定不成立
+    \end{enumerate}
+\end{enumerate}
+\subsection{理解}
+\begin{enumerate}
+    \item 可以把充分条件理解为，足够充分的条件,如a是b的充分条件，表明a是b成立足够充分的条件(a是b成立所需要的所有条件），因此，a成立，则b必然成立
+    \item 可以把必要条件理解为，必须要满足的条件，如b是a的必要条件，表明如果a成立，b必须要成立，则b是a的前提条件（但不一定是足够充分的条件，可能还需要c成立），但是如果b不成立，那么a肯定不成立
+\end{enumerate}
+
+
+\section{可微}
+\par 书上有一个定义：
+如果 $\Delta z$可以表示为：
+\begin{equation}
+\Delta z = f(x + \Delta x, y + \Delta y) - f(x, y) = A \Delta x + B \Delta y + o(\rho)
+\end{equation}
+其中 
+$$
+\rho = \sqrt{(\Delta x)^2 + (\Delta y)^2}
+$$
+\par 其中$A,B$与$x,y$无关，则认为$z=f(x,y)$可微
+\par
+证明可微方面，参照\textbf{\textcolor{red}{P134\quad 三、讨论二元函数的可微性}}
+
+\subsection{用定义证明可微}
+\par 
+当无法用偏导数来证明可微时，可以用定义来证明。
+\par
+由上面的定义来看,可微的充分条件是
+$$
+\lim_{x\rightarrow x_0, y\rightarrow y_0}
+$$
+\begin{equation}
+{
+    \frac{
+        f(x, y) - f(x_0, y_0) - f'_x(x_0,y_0)\Delta x - f'_y(x_0, y_0)\Delta y
+    }
+    {
+        \rho
+    }
+}
+\end{equation}
+$$
+=0 = \frac{o(\rho)}{\rho}
+$$
+\par
+其中$\rho = \sqrt{x^2+y^2}$，$\Delta x= x - x_0$，$\Delta y = y-y_0$，$o(\rho)$为$\rho$的无穷小
+\par
+只要满足这个条件，就认为可微
+\par 
+下面会有用到这个结论的题目，你看看考纲，是不是有用定义证明可微的要求，如果有就看，一切按照考纲上的要求.
+
+\subsection{可微的充分条件}
+\par
+$z=f(x,y)$在点$(x,y)$可微的必要条件是其在点$(x,y)$处的偏导数$\frac{\partial z}{\partial x}$和$\frac{\partial z}{\partial x}$存在且连续.
+\par
+因此，一般证明可微，可以用偏导数存在且连续的方法证明.
+\textbf{注意，偏导存在且连续是可微的充分条件而非必要条件，也就是说，可微并不能够推得偏导连续}，前面有得到偏导存在时可微的必要条件
+\par
+总结一下，就是可微可以得到偏导存在，但并不能推得偏导连续.
+
+
+\subsection{可微的必要条件}
+参照P130定理1,如果函数$z=f(x,y)$在点$(x,y)$处可微，则该函数在点$(x,y)$处的偏导数
+$\frac{\partial z}{\partial x}, \frac{\partial z}{\partial y}$必定存在，且
+$dz =\frac{\partial z}{\partial x}dx + \frac{\partial z}{\partial y}dy$ 
+
+
+
+\section{P131,例1}
+%--- 插入图
+
+%--- 开始解释一般的做法
+
+\par
+\textbf{下面，提到的二元函数的情况同时也可以推广到其他多元函数的情况}
+\par
+在上一个文档里面讲过，二元函数$z = f(x,y)$，从自变量角度，$x,y$在一个二维平面的一定区域(定义域）上，从一个点到另外一个点有多种路径。
+%-- 图样
+\subsection{只考虑自变量}
+\par
+从自变量角度，直接看定义域内，点$P(x,y)$趋近于点$O$的路径
+\begin{center}
+\begin{pspicture}(-4,-3)(4,4)
+%\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+\psaxes[labels=none,ticks=none]{->}(0,0)(-3.5,-2.7)(3.5,4)
+%--坐标轴
+%\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+\pscircle(0,0){2.5}
+%- 坐标轴标定
+\rput[bl](0, 0){O}
+\rput[bl](3, .2){\zihao{4}$x$}
+\rput[bl](.2, 3){\zihao{4}$y$}
+\psline[linestyle=dashed,dash=3pt 2pt,linewidth=1pt,linearc=1,linecolor=red]{<-}(0,0)(.5,.2)(1,1.5)(1.5,2)
+\psline[linestyle=dashed,dash=3pt 2pt,linewidth=1pt,linearc=1,linecolor=red]{<-}(0,0)(.5,1)(1,1.5)(1.5,2)
+\psline[linewidth=1pt,linearc=1,linecolor=blue]{<-}(0,0)(1.5,2)
+\psline[linewidth=1pt,linearc=1,linecolor=blue]{<-}(0,0)(-1.3,1)
+\psdots(-.5, .5)
+\rput[bl](-.5, .5){$P_0'$}
+\end{pspicture}
+\end{center}
+\par
+在前面说过，如果要判断二元函数的极限存在，需要从各个方向的各种路径到固定点的极限都存在且相等，要证明极限不存在，只需要证明按照任意两个路径的极限不存在便可。一般最简单也最常用的是采用两个不同的直线轨迹趋近，就是类似图中的实线路径。
+\par
+采用$y=kx$的直线作为趋近轨迹，代入其中
+$$
+\lim_{x\rightarrow 0, y\rightarrow 0}{\frac{xy}{x^2+y^2}}
+=
+\lim_{x\rightarrow 0, y=kx\rightarrow 0}{\frac{kx^2}{x^2+k^2x^2}}
+=\frac{x}{1+k^2}
+$$
+\par
+因为结果里面包含了$k$，极限会因为$k$取不同的值而不同，也就是按照不同的轨迹会有不同的极限，说明极限不存在.
+\par
+比如，$k$分别取1,2. 如此，趋近的轨迹分别是$y=x$和$y=2x$，会得到
+$$
+\lim_{y=kx,x\rightarrow 0}{\frac{xy}{x^2+y^2}}
+=
+\begin{cases}
+    \begin{array}{ll}
+    \frac{1}{1+1}   &   k=1\\
+    \frac{2}{1+4}   &   k=2
+    \end{array}
+\end{cases}
+$$
+\par
+\textbf{这个是证明二元函数极限不存在的最常用的方法，好好掌握}
+
+
+\section{P132,例2}
+主要还是采用的之前等价无穷小那部分的知识点，那部分很重要
+
+\subsection{知识点}
+\par
+还是参照\textbf{全书P11的3.几个重要极限与几个重要的等价无穷小}
+\par
+\textcolor{red}{做真题的时候，注意参照数学的考纲，把每个知识点都过一下，若觉得有不懂的点，好好看看，把规定要考的每个点都熟悉的话，就很好了}
+$$
+x\rightarrow 0, \sin{x} \sim x
+$$
+同样的
+$$
+x\rightarrow \infty, \sin{\frac{1}{x}} \sim \frac{1}{x}
+$$
+\par
+\textbf{把等价无穷小部分再看看，那部分很重要，大部分题目都会碰到}
+
+\subsection{解答}
+参照\textbf{全书P11 \quad 3.几个重要的极限与几个重要的等价无穷小}
+$$
+\lim_{x\rightarrow 0}{(1+x)^\frac{1}{x}} = e
+$$
+一般用的时候，这边的$x$可以换成一个函数$\varphi(t)$，只要满足
+$$
+\lim_{\varphi(t)\rightarrow 0}{(1+\varphi(t))^\frac{1}{\varphi(t)}} = e
+$$
+\par
+\textbf{这个式子是考纲里面专门列出来的两个式子之一，所以肯定会考的，多把那些基础的熟悉熟悉，可以把那些变形的形式也整理一下，多看看就可以了}
+\par
+最后结果的来源：
+$$
+\lim_{x\rightarrow \infty,y\rightarrow 1}
+{
+    (1+ \frac{1}{xy})^
+    {\frac{y^2}{\sin{\frac{2}{x}}}}
+}
+=
+(1+\frac{1}{x}) ^ {\frac{1}{\frac{2}{x}}}
+$$
+$$
+=e^{\frac{1}{2}}
+$$
+
+\subsection{几种变形形式}
+公式 $ \lim_{x\rightarrow 0}{(1+x)^\frac{1}{x}} = e $
+有几种变形形式：
+\begin{enumerate}
+\item
+$$
+\lim_{x\rightarrow 0}{(1-x)^\frac{1}{x}} = 
+\lim_{-x\rightarrow 0}{(1+(-x))^\frac{1}{x}}  
+$$
+$$
+=\lim_{-x\rightarrow 0}
+    {
+    \frac{1} {
+        (1+(-x))^
+        {
+            \frac{1}{x}}}  
+    }
+= \frac{1}{e} 
+$$
+
+\item 自然, $x\rightarrow 0$和$x\rightarrow \infty,\frac{1}{x}\rightarrow 0$等价，
+$$
+\lim_{x\rightarrow 0}{(1+x)^\frac{1}{x}} = 
+\lim_{x\rightarrow 、infty}{(1+\frac{1}{x})^\frac{1}{\frac{1}{x}}} = 
+e
+$$
+\end{enumerate}
+
+\subsection{总结}
+如此，等价去穷小的式子里面，真正考的时候，都是用函数替换的方式，自己每次做到这部分题目都可以把前面的公式过一下，有必要可以把这个题目的形式摘录下来，每天看看就熟悉，下次就第一时间能够反映过来了。
+
+\section{P134,例6}
+\subsection{知识点}
+\par 
+主要是微分与偏导及连续的关系
+\par
+根据\textbf{P130\quad6.多元函数连续、可导、可微的关系}
+可以得到，对于二元函数
+\begin{enumerate}
+    \item 可微$\rightarrow$连续、可导
+        \begin{enumerate}
+            \item 连续是可微的必要条件（前提条件）
+            \item 可导是可微的必要条件（前提条件）
+        \end{enumerate}
+    \item \textbf{连续与可导并没有直接关系}(这个与一元函数不同，一元函数可导可以推出连续)
+\end{enumerate}
+\par
+再回顾一下，可微的的充分条件有两种，也就是证明可微的方法：
+
+\begin{enumerate}
+    \item 定义法，参照上面\textbf{可微}部分的内容
+    \item 用偏导的方法进行证明，每个偏导均存在及连续$\Rightarrow$可微
+\end{enumerate}
+
+
+\section{P134,例7}
+\par
+题目主要考察可微与偏导的关系。 
+\par
+最后两行就是用定义判断函数在$(0,0)$是否可微。
+$$
+\frac{o(\rho)}{\rho}
+=
+$$
+$$
+\lim_{\Delta x\rightarrow 0, \Delta y\rightarrow 0}
+{
+    \frac{
+        [f(\Delta x,\Delta y) - f(0,0)] - (f'_x(0,0)\Delta x + f'_y(0,0)\Delta y] 
+    }
+    {\rho}
+}
+$$
+其中
+$$
+\rho = \sqrt{
+    {\Delta x}^2
+    +
+    {\Delta y}^2
+}
+$$
+在证明
+$$
+\lim_{\Delta x\rightarrow 0, \Delta y\rightarrow 0}
+{
+    \frac{\Delta y(\Delta x)^2}
+    {
+        [(\Delta x)^2 + (\Delta y)^2]^{\frac{3}{2}}
+    }
+}
+$$
+的极限值不存在时，同样采用了二元函数的极限存在性的判断。
+上面讲到了，如何判断二元函数的极限是否存在，可以先用一个直线线段轨迹$y=kx$试一下，如果极限里面带$k$，说明，根据不同的直线轨迹，极限不同，因此此二元函数的极限不存在。
+%------ end content --------------
+\end{multicols}
+\end{document}
+
+

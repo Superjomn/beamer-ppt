@@ -1,0 +1,98 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{multicol}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{Answer to \\ diameter,maximal minimal path length\\ Graph structure in the Web}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+\section{前期假设}
+\subsection{exploding nodes}
+
+作者通过SCC算法，得到了SCC的规模$explode_3$。为了预测$IN$和$OUT$中节点的数目，提出了节点爆炸的概念。\\
+在利用BFS算法遭遇到一个节点后，有时会把下一步搜索的候选节点极大增加(如增长到1亿)，我们称这种情况为爆炸。\\
+IN和SCC中的节点会在入链BFS中爆炸，OUT和SCC中的节点会在出链BFS中爆炸。 
+可以得到
+$$
+IN + SCC = explode_1
+$$
+$$
+OUT + SCC = explode_2
+$$
+如此，能够得到$IN$和$OUT$的数目。
+$$
+\begin{cases}
+IN=explode_1 - explode_3\\
+OUT=explode_2 - explode_3\\
+SCC=explode_3\\
+\end{cases}
+$$
+
+\par
+作者然后利用了一个实验进行了验证,实验分为两种情况:
+\begin{enumerate}
+    \item 在随机选择的起始节点运用BFS算法，其中前链和后链均爆炸的一部分节点包含于SCC算法生成的SCC节点集合中
+    \item SCC集合中的任何一个节点在入链BFS算法中能够触及的节点数目均相同
+\end{enumerate}
+
+\subsection{SCC}
+作者在3.3章节专门介绍了对SCC直径的判断方法。\\
+似乎是利用了抽样调查，从SCC取样136个节点，利用BFS测试，取得最大深度。得到一张表:
+%---- 表格 ------
+\\
+\begin{tabular}{  l  l  l  l }
+\hline
+Measure& Minimum depth& Average depth& Maximum depth\\
+\hline
+In-liks& 475& 482& 503\\
+Out-links& 430& 434& 444\\
+\hline
+\end{tabular}
+\\
+
+%---------图片一-------
+\begin{pspicture}(-4,-4)(4,4)
+%\psgrid(-4,-4)(4,4)
+%little circle
+\pscircle[linewidth=1pt](0,0){1.5}
+\rput[br]{*0}(.5,.5){\emph{SCC}}
+%big circle
+\pscircle[linewidth=1pt](0,0){4}
+%pointer
+\pscircle[linewidth=2pt](-0.7,-0.7){0.1}
+%line
+\psline[linewidth=2pt,showpoints=true,linearc=0]{<->}(-.7,-.7)(2.7,2.7)
+\rput[br]{*45}(2,1){\emph{Maximum depth}}
+%\rput[br]{*45}(-.5,-.2){\emph{$sample_i$}}
+%\psline[linewidth=1pt,linearc=0]{-}(1.5,0)(3,2.5)(3,-2.5)(1.5,0)
+\psline[linewidth=2pt,showpoints=true,linearc=0]{<->}(.7,1)(2.7,3)
+\rput[br]{*45}(1.7,2.3){\emph{Min depth}}
+\pscircle[linewidth=2pt](0.7,1.1){0.1}
+%\rput[br]{*45}(.7,1.2){\emph{$sample_j$}}
+\end{pspicture}
+%----- end picture----
+\begin{center}
+$Figure 1$
+\end{center}
+
+$Figure 1$是一个比较理想的状态，通过图形，可以很简单判断：
+$$ diameterOfSCC = MaximumDepth - MinimumDepth $$
+$$ max(503-475, 444-430) = 28 $$
+这就是课件中SCC直径28的由来。
+但是课件中说
+
+
+
+\end{multicols}
+
+
+
+\end{document}
+
+

@@ -1,0 +1,223 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{pstricks}
+\usepackage{graphics,graphicx}
+\usepackage{pst-plot}
+\usepackage{color}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]
+  {FangSong}
+\title{全书解答8}
+\author{Chunwei Yan}
+\date{\today}
+\begin{document}
+\maketitle
+%---content here----
+\begin{multicols}{2}
+\section{P87例8,方法2}
+\par 首先，参照例6的结论，这个结论比较重要:
+
+\subsection{例6关于$f(x)$及其原函数奇偶性和周期性的关系}
+\par 首先明确一点: 
+\begin{itemize}
+    \item $f(x)$的原函数是$\int_0^x{f(x)} + C$，其中$C$是常数项
+    \item $\int_0^x{f(x)}$只是$f(x)$的一个原函数(根据$C$的不同，还有很多其他的原函数)
+\end{itemize}
+\par 那么会有三种情况
+
+\subsubsection{ 已知$F(x)$的情况，看$f(x)$的情况}
+\begin{enumerate}
+\item 如果$F(x)$是奇函数，则$f(x)$是偶函数
+\item 如果$F(x)$是偶函数，则$f(x)$是奇函数
+\item 如果$F(x)$是T周期函数，那么$f(x)$也是T周期函数
+\end{enumerate}
+
+\subsubsection{ 已知$f(x)$的情况，看$F(x)$的情况}
+\par 反之，由于$f(x)$的反函数$F(x) = \int_0^x{f(x)} + C$受常数$C$的影响，情况会复杂一点
+\begin{enumerate}
+\item $f(x)$为偶函数，则其只有一个特殊的原函数$\int_0^x{f(x)}$为奇函数，而其他原函数$\int_0^x{f(x)}+C$则会由于常数项$C$的变化而变化
+    \begin{itemize}
+    \item 主要因为$F(x)+f(-x) = \{\int_0^x{f(x)} + C \} + \{\int_0^{-x}{f(x)} + C\} = 2C$
+    \item 这个值只在$C=0$时，才有$F(x)+F(-x)=0$
+    \end{itemize}
+\item $f(x)$为奇函数，则其所有原函数$\int_0^x{f(x)}+C$全为偶函数
+    \begin{itemize}
+    \item $F(x) - F(-x) = \{ \int_{0}^{x}{f(x)} + C \} - \{ \int_{0}^{-x}{f(x)} + C \} = 0$
+    \end{itemize}
+\item 若f(x)为T周期函数，那么必须有$\int_0^T{f(x)dx}=0$，才能够有$F(x)$为周期函数
+\end{enumerate}
+
+\subsection{间断点}
+\textcolor{red}{\textbf{如果不熟悉第一类间断点、跳跃间断点、第二类间断点，回顾一下P31$\xi 3$}}
+
+\subsection{解答}
+\par 采用了论证法，无非就是按照题目中的条件，推导出来结论
+\par 跳跃间断点就是左右极限存在但不相等
+\par 如果在$x=a_0$处存在跳跃间断点，也就是
+\begin{equation}
+\lim_{x\rightarrow {a_0}^+}{f(x)} = A
+\end{equation}
+\begin{equation}
+\lim_{x\rightarrow {a_0}^-}{f(x)} = B
+\end{equation}
+\begin{equation}
+A \neq B
+\end{equation}
+\par 调到方法2第3个公式
+\begin{equation}
+\varphi(x) = 
+\begin{cases}
+    \begin{array}{ll}
+    f(x) - A    &   x>0;\\
+    0           &   x=0;\\
+    f(x) + A    &   x<0;
+    \end{array}
+\end{cases}
+\end{equation}
+\par 接下来，当$x>0$时
+\begin{equation}
+\int_0^x{\varphi(x)dx} = \int_0^x{(f(t) + A)dt} = \int_0^x {f(t)dt} + Ax
+\end{equation}
+\par 当$x<0$时类似
+\par 如此，继续向下看，到
+\begin{equation}
+\int_0^x{f(t)dt} - A \left| x \right|
+\end{equation}
+判断其为偶函数，其中$\int_0^x{f(t)dt}$为偶函数就是根据上面提到的例6的结论
+
+\section{P92例2最后一行解答}
+\par 这里用到复杂分式的分解
+\par 当出现类似
+$$ \int{
+    \frac{dx}{
+        x(x-1)^2
+    }
+}
+$$
+\par 就可以将其中的分式分解为多个简单分式的和，然后拆分开来积分
+
+\subsection{复杂分式的分解}
+\par 首先进行化简，如
+\begin{equation}
+\frac{
+    ax+b
+}
+{(x-1)^2x}
+=
+\frac{a}{(x-1)^2}
++
+\frac{b}{(x-1)^2x}
+\end{equation}
+\subsubsection{分子为常数项的简单分式的分解}
+\par 下面讨论类似于$\frac{1}{x(x-1)^3}$的式子的拆分
+\par 先将分母拆分为所有可能的小的部分
+\par 这里，分母可以拆分为
+
+\begin{equation}
+\begin{array}{l}
+x\\
+(x+1)\\
+(x+1)^2\\
+(x+1)^3\\
+\end{array}
+\end{equation}
+然后设上参数
+\begin{equation}
+\frac{A}{x}+
+\frac{B}{(x+1)}+
+\frac{C}{(x+1)^2}+
+\frac{D}{(x+1)^3}
+=
+\frac{1}
+{x(x+1)^3}
+\end{equation}
+\par 求得
+\begin{equation}
+\begin{cases}
+\begin{array}{l}
+A = 1\\
+D = 1 
+\end{array}
+\end{cases}
+\end{equation}
+\par 于是，就可以得出
+\begin{equation}
+\frac{1}
+{x(x+1)^3}
+=
+\frac{1}{x} \times
+\frac{1}{(x+1)^3}
+\end{equation}
+\subsubsection{分子为多项式的分式的分解}
+\par 比如需要分解
+\begin{equation}
+\frac{x^2+x+2}
+{x(x+1)^3}
+\end{equation}
+\par 首先化简
+\begin{equation}
+\frac{x^2+x+2}
+{x(x+1)^3}
+=
+\frac{x}
+{(x+1)^3}
++
+\frac{3}
+{x(x+1)^3}
+\end{equation}
+\par 其中$\frac{x}{(x+1)^3}$的分解
+\par 对分母的分解方法不变，但是分子$x$的分解，需要将分子中的多项式还原为n项的参数多项式
+\par 比如分子为n次多项式$g(n,x)$需要转化为$ = Ax^n + Bx^{(n-1)} + Cx^{(n-2)} + \cdots + D$
+\par 这里分子比较简单，就是一次多项式$x$，需要转化为1次参数多项式$Ax + B$
+\par 如果这里分子比较复杂，为$x^2+2$，二次多项式，那么也是从二次一直到0次(常数)，为$Ax^2+Bx+C$，其中的参数A,B,C将会被计算出来
+\par 回来原来的题目
+\par 拆分分子分母，并且设方程
+\begin{equation}
+\frac{x}
+{(x+1)^3}
+=
+\frac{Ax+C}{(x+1)}
++
+\frac{Ax+C}{(x+1)^2}
++
+\frac{Ax+C}{(x+1)^3}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{P94例7倒数第三行}
+
+\section{P96例11解答1、2最后一行}
+
+\section{P98例15(1)评注}
+
+\section{P100例18P101上数第3行}
+
+\section{P105例5解答倒数7、8行}
+
+\section{P110例1(2)}
+
+\section{P112第1行}
+
+\section{P120第1行}
+
+\section{P120例7方法1}
+
+\section{P121例8方法1}
+
+\section{P123例10}
+\end{multicols}
+\end{document}

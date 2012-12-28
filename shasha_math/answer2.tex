@@ -1,0 +1,562 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{全书解答2}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+
+\section{P59-例7}
+
+% ---------- 椭圆图形 -----------------------------------------
+\begin{pspicture}(-4,-3)(4,3)
+%\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+\psaxes{->}(0,0)(-3.5,-2.7)(3.5,2.7)
+\psellipse(0,0)(2.5,1.5)
+%切线  
+\psline[linewidth=1pt,linearc=0]{-}(4.3, -1)(-1, 3.3)
+\psellipse[linestyle=dashed,dash=3pt 2pt](0,0)(.5, 2.5)
+\psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0]{-}(0, -2.5)(3, 0)
+%曲线模式
+\psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=.5]{-}(0, 2.7)(1, 2)(2, 2)(3, 0)
+
+%字母
+\rput[bl](0, 0){O}
+\rput[b](3, 0){P}
+\rput[bl](0, 3){A}
+\rput[bl](0, -3){B}
+\rput[bl](1, 0){a}
+\rput[bl](0, 1){b}
+\rput[bl](2, 2){$l_1$}
+\end{pspicture}
+
+\subsection{计算截距}
+由图形得到，由于旋转的是一个三角形，所以需要求的体积是一个圆锥，可以直接用圆锥的计算公式计算。当然，如果旋转的是一个曲线$l_1$，则形成的就是一个曲面椎体，则必须用积分的方式求解体积。\\
+首先求切线的公式：\\
+由
+$\frac{x^2}{a^2} + \frac{y^2}{b^2}=1$
+得到：
+$$
+y^2 = b^2 - \frac{b^2}{a^2} x^2
+$$
+两边同时对x求导，得到：
+$$
+2y \frac{dy}{dx} = - \frac{b^2}{a^2}2x
+$$
+设切线斜率为$k$,即：
+$$
+k = y' = - \frac{b^2 x}{a^2 y}
+$$
+此处切点为$(\xi, \eta)$,所以，切线为：
+$$
+y - \eta = - \frac{b^2 \xi}{a^2 \eta}(x - \xi)
+$$
+可以得到截距：
+$$
+\begin{cases}
+X = \frac{b^2\xi^2 + a^2\eta^2}{b^2\xi}
+	= \frac{a^2}{\xi}\\
+Y = \frac{b^2}{xi}
+\end{cases}
+$$
+(化简时用到：$
+\frac{\xi^2}{a^2} = \frac{\eta^2}{b^2} = 1
+$)
+
+\subsection{计算圆锥体积}
+此处直接使用圆锥公式计算，当然，如果是其他曲线旋转一周的话，一定要像答案一样采用积分。
+$$
+V = \frac{1}{3} \pi r^2 h
+$$
+得到：
+$$
+V = \frac{\pi a^2 b^4} {3\eta^2 \xi}
+$$
+
+\subsection{求体积最小值}
+由\textbf{P55 3}得到最大最小值求解的方法。
+\paragraph 在条件
+$ \frac{\xi^2}{a^2} = \frac{\eta^2}{b^2} = 1 $
+下求解:
+$$
+V \propto \frac{1}{\eta^2\xi}
+$$
+所以，求$V$最小值，就是求$\eta^2\xi$最大值。
+设$g(\xi, \eta) = \xi \eta^2$:
+由 
+$ \frac{\xi^2}{a^2} = \frac{\eta^2}{b^2} = 1 $
+得到$\xi,\eta$互相间的关系，进行替代，得到：
+$$
+g(\xi, \eta) = \xi b^2 \frac{a^2 - \xi^2}{a^2}
+$$
+求解$g(\xi, \eta)$的最大值.\\
+求微:
+$$
+\frac{dg}{d\xi} = \frac{b^2}{a^2} (a^2 - 3\xi^2)
+$$
+取的其极值点：
+$
+\xi = \frac{a}{\sqrt{3}}
+$
+\paragraph{判断有效性}
+\begin{enumerate}
+    \item 当 $0< \xi <\frac{a}{\sqrt{3}} $时，$\frac{dg}{d\xi}>0$
+    \item 当 $\frac{a}{\sqrt{3}}$时， $\frac{dg}{d\xi}>0$
+\end{enumerate}
+得到 
+$
+\xi = \frac{a}{\sqrt{3}}时，V有唯一最小值
+$
+
+\subsection{公式积累}
+\paragraph{圆锥体积}
+$$
+V = \frac{1}{3} \pi r^2 h
+$$
+\paragraph{球体积}
+$$
+V = \frac{4}{3} \pi r^3
+$$
+
+
+\section{P69 例12}
+此为经典题型，要求$\xi \in (0, 1)$，使$(1+ \xi) f'(\xi) = f(\xi)$.
+就是求解$(1+x)f'(x) = f(x)$,使得其在$x \in (0,1)$内有解。
+$$
+f'(x) = \frac{f(x)}(1+x)
+$$
+$$
+\frac{df(x)}{dx} = \frac{f(x)}{1+x}
+$$
+这是一个很标准的微分函数\\
+将两侧分子分母交换得到：
+$$
+\frac{df(x)}{f(x)} = \frac{dx}{1+x}
+$$
+通过两侧同时积分求解：
+$$
+\int{\frac{df(x)}{f(x)}} = \int{\frac{dx}{1+x}}
+$$
+得到$\ln{\left| f(x) \right|} = \ln{\left| 1+x \right|} + C$
+改写为方程
+$$
+\frac{f(x)}{1+x} = C
+$$
+不妨设：
+$$
+g(x) = \frac{f(x)}{1+x} - C 
+$$
+此时可以看到，题目中$x = 1, 0$,代入：
+有
+$$
+g(1) = \frac{f(1)}{2} - C = \frac{2f(0){2}} - C = f(0) 
+$$
+$$
+g(0) = f(0) 
+$$
+所以：
+$$
+g(1) = g(0)
+$$
+利用\textbf{P61 罗尔定理}得到：
+必存在$x \in (0,1)$,使得
+$$
+g'(x) = 0  = \frac{df(x)}{f(x)} = \frac{dx}{1+x}
+$$
+不妨将此解$x$表示为$\xi$\\
+得证.
+
+\section{P70 例13}
+此题较难把握，题型难以掌握，建议跳过
+
+\section{P71 例14(2)}
+\paragraph{此部分，还是要把几个不等式好好熟悉一下}
+\paragraph{首先，大题中，后面的小题肯定会用到前面小题中的结论,特别是前面小题比较简单的时候,就是提示}
+首先由(1)，结合\textbf{P61 拉格朗日中值定理}得到：
+$$\exists \eta \in (0, \xi), f'(\eta)(\xi - 0) = \frac{a}{a+b}$$
+$$\exists \zeta \in (\xi, 1), f'(\zeta) (1-\zeta) = \frac{b}{a + b}$$
+将
+$f'(\xi)$和$f'(\zeta)$代入
+$$
+\frac{a}{f'{\eta}} + \frac{b}{f'{\zeta}} = a+ b
+$$
+得证。
+
+\section{P71 例15}
+\paragraph{ P61 费马引理、罗尔定理、拉格朗日定理等等要非常熟悉，基本上这些都是重点，简单点的应用（小题）很频繁。 }
+\textbf{具体的可以记住一些具体的图形例子。}
+\begin{enumerate}
+    \item A: 由罗尔定理可知,$f'(x)$的零点与$f(x)$并无直接关系,所以不要被迷惑
+    \begin{center}
+    反例
+        \begin{pspicture}(-4,-3)(4,1.2)
+        %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+        \psaxes{->}(0,0)(-3.5,-2.7)(3.5,1)
+        \psline[linewidth=1pt,linearc=.5,linecolor=red]{-}(-2, -2)(0, 0.2)(2, -2)
+        \rput[bl](.2, .2){O}
+        \end{pspicture}
+    \end{center}
+    
+    \item B:\\
+    \begin{center}
+    反例
+        \begin{pspicture}(-4,-3)(4,1.2)
+        %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+        \psaxes{->}(0,0)(-3.5,-2.7)(3.5,1)
+        \psline[linewidth=1pt,linearc=.5,linecolor=red]{-}(-2, -2)(0, -.5)(2, -2)
+        \rput[bl](.2, .2){O}
+        \end{pspicture}
+    \end{center}
+
+    \item C:\\
+    \begin{center}
+    反例
+        \begin{pspicture}(-4,-3)(4,1.2)
+        %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+        \psaxes{->}(0,0)(-3.5,-2.7)(3.5,1)
+        \psline[linewidth=1pt,linearc=.5,linecolor=red]{-}(-2, -2)(0, -.5)(2, -2)(3, -.3)(4, -2)
+        \rput[bl](.2, .2){O}
+        \end{pspicture}
+    \end{center}
+\end{enumerate}
+
+\section{P72 例17}
+此处采用的是类似书本上拉格朗日中值公式的证明方法。
+拉格朗日中值法：
+$$
+f(b) - f(a) = f'(\xi)(b-a)
+$$
+或者
+$$
+f'(\xi) = \frac{f(b) - f(a)}{(b-a)}
+$$
+很类似题目中的形式,
+参照证明中的方法：
+\begin{pspicture}(-4,-3)(4,4)
+%\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+\psaxes{->}(0,0)(-3.5,-2.7)(3.5,2.7)
+\psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0]{-}(-2, .5)(3, 3)
+\psline[linewidth=1pt,linearc=1]{-}(-3, -1)(-2, .5)(0, 2)(3, 3)(4, 2)
+\psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0,linecolor=red]{-}(-1, 1.5)(1, 2.5)
+\rput[B](-2, .2){a}
+\rput[B](3, .2){b}
+\rput[br](-2, .5){A}
+\rput[bl](3, 3){B}
+\rput[bl](-.4, 2.2){$l_1$}
+\end{pspicture}
+
+\subsection{AB直线公式}
+斜率
+$$
+k = \frac{f(b) - f(a)}{b - a}
+$$
+$$
+y - f(a) = k (x - a)
+=  \frac{f(b) - f(a)}{b - a} (x-a)
+$$
+\subsection{考察直线AB和$f(x)$的距离}
+$$
+\varphi(x) = f(x) - y
+= f(x) - [f(a) +\frac{f(b) - f(a)}{b - a} (x-a) ]
+$$
+\paragraph{分析}
+$\varphi(x)$表示曲线AB上任意一点到直线AB的距离。当$\varphi'(x)=0$时，就是此点上切线与直线AB平行的情况。
+$$
+\varphi'(x) =
+f'(x) - \frac{f(b) - f(a)}{b - a}
+$$
+因为
+$$
+\varphi(a) = \varphi(b) = 0
+$$
+因此，在AB两点间，如果$\varphi(x)==0$,则$f(x)$曲线与直线AB吻合，所以$f(x)$就是一次式。与题目矛盾。
+所以，至少存在一个点$x=\xi$，使得$\varphi(\xi)>0 or \varphi(\xi)<0$
+这两种情况均会得到：
+$$
+\left| f'(\xi) \right| > 
+\left| \frac{f(b) - f(a)}{b-a} \right|
+$$
+得证
+
+\section{P73 例18}
+\subsection{连续与可导的关系}
+自己也注意积累，我只列出了几个最基础的
+\begin{enumerate}
+    \item 连续是可导的必要条件（前提），所以，知道可导，则说明必连续
+    \item 可导，不代表导数连续。 所以，任意一点的导数及导数的极限并没有很直接的关系。 当考虑到导数的极限时，确定其导数是否有充分条件连续
+    \item 一阶可导=>连续，二阶可导=>一阶导数连续，反之不成立
+\end{enumerate}
+所以，相应得到：
+\begin{enumerate}
+    \item A: 就是连续性的判断，如果成立，就说明$f'(x)$在$x=x_0$处连续
+    \item B: 同样是连续性的判断条件
+    \item D: 
+    \begin{center}
+    反例
+        \begin{pspicture}(-4,-3)(4,1.2)
+        %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+        \psaxes{->}(0,0)(-3.5,-2.7)(3.5,1)
+        \psline[linewidth=1pt,linecolor=red]{-}(-2, -2)(0, 0)(2, -2)
+        \rput[bl](.2, .2){O}
+        \end{pspicture}
+    \end{center}
+    在O点处导数不存在（两侧导数值不一致）
+\end{enumerate}
+    %\item C:可以积累一下正确结论：
+    %$$ \lim_{x \rightarrow x_0}{\frac{f(x) - f(x_0)}{x - x_0}} = \lim_{x \rightarrow x_0}{f'(x)} $$
+    \subsection{衍生和积累}
+    自己还是要注意，由点到面的复习方法。 此处就可以把连续性和可导性那部分好好看看。会比单独一道题要收获很多。
+    下次的话，同类型的题目，题型方法OK,知识点也懂的话，就没有问题了。
+
+    \section{P82 例1}
+    \subsection{列出分段函数}
+    需要确立好$x$的前提范围
+    \subsection{进行积分}
+    \subsection{参数统一}
+    因为最终的分段函数的范围需要连接起来
+    得到了：
+
+    $$
+	\int { \left| 1-\left| x \right|  \right|  } dx
+    =
+	\begin{cases}
+	\begin{array}{ll}
+	- \frac{x^2}{2} - x - 1 + C_1,	&	x \le -1\\
+	\frac{x^2}{2} + x + C_2,			&	-1 < x \le 0\\
+	x - \frac{x^2}{2} + C_3,			&	0< x \le 1\\
+	\frac{x^2}{2} - x + 1 + C_4,		&	x > 1
+	\end{array}
+	\end{cases}
+    $$
+
+    此处$C_1, C_2, C_3, C_4$的来源：分段函数的各段都是由单独的积分而来，常数C并不统一,因此每段用$C_1,C_2,C_3,C_4$单独替代。
+    如此，每一段函数间是有联系的。
+    \paragraph{参照 P80 定理 3.1.1 定积分存在定理}
+    不定积分的原函数都是能够可导的，如：
+    $$
+    F(x) = \int{f(x)dx}
+    $$
+    则
+    $$
+    F'(x) = f(x)
+    $$
+
+    既然可导，说明，F(x)连续。\\
+    因此，可以积累结论：不定积分必连续，且可导。
+    此时，可以得到:分段函数应该是可导连续的。因此，函数$f(x)$需要在$x = -1, 0, 1$处均连续。
+    因此：
+
+    $$
+    x \rightarrow -1:
+	- \frac{x^2}{2} - x - 1 + C_1
+    =
+	\frac{x^2}{2} + x + C_2
+    $$
+    $$
+    \cdots
+    $$
+
+    \section{P83 例2}
+    \begin{center}
+    $$
+    t \in [0, 1]
+    $$
+    \begin{pspicture}(-.5,-.5)(4,4)
+    \psset{unit=2cm}
+    \psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-.2,-.2)(1.5, 1.5)
+    \psaxes{->}(0,0)(-.2,-.2)(1.5,1.5)
+    \psframe(0, 0)(1, 1) 
+    \psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0]{-}(-1, 1.5)(1.5, -1)
+    \pspolygon [fillstyle=vlines] (0,0)(.5, 0)(0, .5)
+    \end{pspicture}
+    \end{center}
+
+    \begin{center}
+    $$
+    t \in [1, 2]
+    $$
+    \begin{pspicture}(-.5,-.5)(4,4)
+    \psset{unit=2cm}
+    %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-.2,-.2)(1.5, 1.5)
+    \psaxes{->}(0,0)(-.2,-.2)(1.5,1.5)
+    \psframe(0, 0)(1, 1) 
+    \psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0]{-}(0, 1.5)(1.5, 0)
+    \pspolygon[fillstyle=vlines](0, 0)(0, 1)(.5, 1)(1, .5)(1, 0)
+    %\pspolygon [fillstyle=vlines](1, 0)(1, .5)(.5 1)(0, 1)
+    %总长度
+    \psaxes{|-|}(0, -.1)(1.5, -.1)
+    \rput[t](0.7, -0.2){t}
+    %
+    \psaxes{|-|}(1, -.3)(1.5, -.3)
+    \rput[t](1.2, -0.4){t-1}
+    % 
+    \psaxes{|-|}(1.1, .5)(1.1, 1)
+    \rput[lt](1.2, 0.75){$2 - t$}
+    
+    \end{pspicture}
+    \end{center}
+    可以直接考虑正方形总面积$S$去除空白处的面积$S'(t)$\\
+    $$
+    S'(t) = \frac{1}{2} (2-t)^2
+    $$
+    $S - S'(t)$便得
+    \begin{center}
+    $$
+    t>2
+    $$
+    \begin{pspicture}(-.5,-.5)(4,4)
+    \psset{unit=2cm}
+    \psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-.2,-.2)(2, 2)
+    \psaxes{->}(0,0)(-.2,-.2)(1.5,1.5)
+    \psframe [fillstyle=vlines] (0, 0)(1, 1) 
+    \psline[linestyle=dashed, dash=3pt 2pt,linewidth=1pt,linearc=0]{-}(2, 0)(0, 2)
+    \end{pspicture}
+    \end{center}
+
+    \section{P84 例4}
+    多联系，这类题只是步骤稍微多了点，按照步骤都可以做出来。
+    自己懂了之后，就会发现，这个题目只是两个题目的组合而已。
+    \subsection{分段函数}
+    将分段函数$f(x)$按照不同的范围进行积分\\
+    \begin{enumerate}
+        \item 当$x<0$\\
+        $$
+        \begin{array}{ll}
+        F(x) & = \int_{1}^{x}{f(t)dt}\\
+            &   = -\int_{x}^{1}{f(t)dt}\\
+            &   = -\int_{x}^{0}{f(t)dt} -\int_{0}^{1}{f(t)dt}   \\
+            &   = -\int_{x}^{0}{e^tdt} - \int_{0}^{1}{xdt}\\
+            &   = e^x - \frac{3}{2}
+        \end{array}
+        $$
+        \item 当$x \ge 0$时\\
+        $$
+        \begin{array}{ll}
+        F(x)    & =- \int_{x}^{1}{tdt} \\
+                & =\frac{x^2}{2} - \frac{1}{2}
+        \end{array}
+        $$
+    \end{enumerate}
+    所以
+    $$
+    F(X) = 
+    \begin{cases}
+        \begin{array}{ll}
+        e^x - \frac{3}{2},          &    x<0\\
+        \frac{x^2}{2} - \frac{1}{2},&    x\ge 0
+        \end{array}
+    \end{cases}
+    $$
+    如此，只是判断一个普通的分段函数在某个点处的性质
+    \subsection{判断性质}
+    $\cdots$
+
+    \section{P85 例5}
+    \paragraph{参照 P80 定积分存在定理,原函数存在定理}
+    于是判断两个函数$f(x),g(x)$的连续性
+    $f(x)$在0处不连续
+    $$
+    \lim_{x \rightarrow 0}{g(x)}
+    = 
+    \lim_{x \rightarrow 0}{x\sin{\frac{1}{x}}}
+    =
+    \lim_{x \rightarrow 0}{x\frac{1}{x}} = 0 = g(0)
+    $$
+    因此连续,如此判断\textcircled{4}正确\\
+    $f(x)$只存在几个可数的间断点，因此\textcircled{2}正确
+
+    \section{P85 例6}
+    \paragraph{做到这种选择题，如果证明太过复杂，注意排除法,另外，复习的时候，注意积累小结论}
+    这道题里面核心点：
+    $$
+    F(x) = \int{f(x)dx} + C
+    $$
+    其中参数$C$才是关键。\\
+    A,B,C中$=>$不会受到$C$的影响。\\
+    但是回头，则需要注意$C$
+    \begin{enumerate}
+        \item A \quad 判断 =>
+        $F(x)$为奇，
+        $$
+        So \quad F(x) = -F(-x)
+        $$
+        $$
+        Because \quad f(x) = F'(x)
+        $$
+        $$
+        So \quad f(x) = F'(x) = -(F(-x))' = f(-x)
+        $$
+        所以 =>成立\\
+
+        \item A \quad 判断 <=
+        $f(x)$为偶函数
+        $$
+        \begin{array}{l}
+        So \quad f(x) = f(-x)\\
+        Because \quad F(x) = \int_{0}^{x}{f(t)dt} + C\\
+        So \quad F(-x)  = \int_{0}^{-x}{f(t)dt} + C\\
+        Set \quad u = -t\\
+        \end{array}
+        $$
+        因为t的范围为$0 \rightarrow -x$\\
+        因此$u=-x$的范围为$0 \rightarrow x$\\
+        $$
+        \begin{array}{ll}
+        So \quad F(-x) & = \int_{0}^{x}{f(-u)d-u} + C\\
+                        & = -\int_{0}^{x}{f(u)du} + C
+        \end{array}
+        $$
+        $$
+        So \quad F(x) + F(-x) = 2C
+        $$
+        只有$C=0$时，<=才成立.
+
+        \item B \quad 判断 => \\
+        同上\\
+        \item B \quad 判断 <=\\
+        $f(x)$为奇数
+        $$
+        \begin{array}{l}
+        f(x) = -f(-x)\\
+        Because \quad F(x) = \int_{0}^{x}{f(t)dt} + C\\
+        F(-x) = \int_{0}^{-x}{f(t)dt} + C\\
+        Set \quad u = -t\\
+        Because \quad t: 0 \rightarrow -x\\
+        So \quad u=-t: -0 \rightarrow -(-x)\\
+            \begin{array}{ll}
+            So F(-x) & = \int_{0}^{x}{f(-u)d-u} + C\\
+                     & = \int_{0}^{x}{f(u)du} + C\\
+                     & = F(x)
+            \end{array}
+        \end{array}
+        $$
+    \end{enumerate}
+    其他两个情况也类似
+    \subsection{关键点}
+    定积分替换变量的方法
+    $$
+    \begin{array}{l}
+    F(-x) = \int_{0}^{-x}{f(t)dt} + C\\
+    Set \quad u = -t\\
+    Because \quad t: 0 \rightarrow -x\\
+    So \quad u=-t: -0 \rightarrow -(-x)\\
+        \begin{array}{ll}
+        So F(-x) & = \int_{0}^{x}{f(-u)d-u} + C\\
+                 & = \int_{0}^{x}{f(u)du} + C\\
+                 & = F(x)
+        \end{array}
+    \end{array}
+    $$
+
+
+    
+
+\end{multicols}
+\end{document}

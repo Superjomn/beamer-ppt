@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Documents/homework/calculate.py.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v10">
+<meta name="syntax" content="python">
+<meta name="settings" content="number_lines,use_css,pre_wrap,expand_tabs">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+.lnr { color: #999; }
+.Identifier { color: blue; font-weight:bold; }
+.Constant { color: #000; }
+.Statement { color: #000; font-weight: bold; }
+.Type { color: #8080ff; font-weight: bold; }
+.Comment { color: #ff6060; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="lnr"> 1 </span><span class="Statement">class</span> <span class="Identifier">Elem</span>:
+<span class="lnr"> 2 </span>    <span class="Statement">def</span> <span class="Identifier">__init__</span>(self):
+<span class="lnr"> 3 </span>        self.P = <span class="Identifier">None</span>
+<span class="lnr"> 4 </span>        self.L = <span class="Identifier">None</span>
+<span class="lnr"> 5 </span>
+<span class="lnr"> 6 </span>    <span class="Statement">def</span> <span class="Identifier">saveToDisk</span>(self):
+<span class="lnr"> 7 </span>        <span class="Constant">'''</span>
+<span class="lnr"> 8 </span><span class="Constant">        resave an elem's new data to disk</span>
+<span class="lnr"> 9 </span><span class="Constant">        '''</span>
+<span class="lnr">10 </span>        <span class="Statement">pass</span>
+<span class="lnr">11 </span>
+<span class="lnr">12 </span>    <span class="Statement">def</span> <span class="Identifier">calculated</span>(self):
+<span class="lnr">13 </span>        <span class="Constant">'''</span>
+<span class="lnr">14 </span><span class="Constant">        whether has been calculated</span>
+<span class="lnr">15 </span><span class="Constant">        '''</span>
+<span class="lnr">16 </span>        <span class="Statement">pass</span>
+<span class="lnr">17 </span>
+<span class="lnr">18 </span>    <span class="Statement">def</span> <span class="Identifier">reload</span>(self):
+<span class="lnr">19 </span>        <span class="Constant">'''</span>
+<span class="lnr">20 </span><span class="Constant">        reload information from disk</span>
+<span class="lnr">21 </span><span class="Constant">        '''</span>
+<span class="lnr">22 </span>        <span class="Statement">pass</span>
+<span class="lnr">23 </span>
+<span class="lnr">24 </span><span class="Statement">class</span> <span class="Identifier">PagerankCalculator</span>():
+<span class="lnr">25 </span>    <span class="Statement">def</span> <span class="Identifier">__init__</span>(self):
+<span class="lnr">26 </span>        self.initEveryElemRank()
+<span class="lnr">27 </span>
+<span class="lnr">28 </span>    <span class="Statement">def</span> <span class="Identifier">initEveryElemRank</span>():
+<span class="lnr">29 </span>        <span class="Constant">'''</span>
+<span class="lnr">30 </span><span class="Constant">        init each elem's initial rank to 1/N</span>
+<span class="lnr">31 </span><span class="Constant">        and save them to disk</span>
+<span class="lnr">32 </span><span class="Constant">        '''</span>
+<span class="lnr">33 </span>        <span class="Statement">pass</span>
+<span class="lnr">34 </span>
+<span class="lnr">35 </span>    <span class="Statement">def</span> <span class="Identifier">allCalculated</span>():
+<span class="lnr">36 </span>        <span class="Constant">'''</span>
+<span class="lnr">37 </span><span class="Constant">        whether all elements are calculated and resaved</span>
+<span class="lnr">38 </span><span class="Constant">        '''</span>
+<span class="lnr">39 </span>        <span class="Statement">pass</span>
+<span class="lnr">40 </span>
+<span class="lnr">41 </span>    <span class="Statement">def</span> <span class="Identifier">calRank</span>(self):
+<span class="lnr">42 </span>        <span class="Constant">'''</span>
+<span class="lnr">43 </span><span class="Constant">        main program</span>
+<span class="lnr">44 </span><span class="Constant">        '''</span>
+<span class="lnr">45 </span>        <span class="Statement">while</span> <span class="Statement">not</span> close_enough():
+<span class="lnr">46 </span>            <span class="Statement">while</span> <span class="Statement">not</span> self.allCalculated():
+<span class="lnr">47 </span>                <span class="Comment">#random select an elem that has not been calculated</span>
+<span class="lnr">48 </span>                elem = self.selectOneNotCalculatedElem()
+<span class="lnr">49 </span>                <span class="Statement">while</span> elem.hasNeighbour():
+<span class="lnr">50 </span>                    neighbours = elem.getNeighboursFromDisk() <span class="Comment"># List of Elem objects</span>
+<span class="lnr">51 </span>
+<span class="lnr">52 </span>                    <span class="Statement">for</span> neighbour <span class="Statement">in</span> nabours:
+<span class="lnr">53 </span>                        elem.P += k * neighbour.P / neighbour.L
+<span class="lnr">54 </span>                    elem.p += (<span class="Constant">1</span>-k) * (<span class="Constant">1</span> / N)
+<span class="lnr">55 </span>                    elem.saveToDisk()
+<span class="lnr">56 </span>
+<span class="lnr">57 </span>                    <span class="Statement">for</span> neighbour <span class="Statement">in</span> neighbours:
+<span class="lnr">58 </span>                        elem = neighbour.<span class="Identifier">reload</span>()
+<span class="lnr">59 </span>
+<span class="lnr">60 </span>                        <span class="Statement">if</span> elem.Calculated():
+<span class="lnr">61 </span>                            <span class="Statement">continue</span>
+<span class="lnr">62 </span>
+<span class="lnr">63 </span>                    elem = neighbours
+</pre>
+</body>
+</html>

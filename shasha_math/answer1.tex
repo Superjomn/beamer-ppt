@@ -1,0 +1,383 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{全书解答1}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+
+\section{P21-例15}
+还是需要对公式等小的知识点足够的重视，尽全力采用各种方式熟练掌握。这道题中就涉及了很多小的等价无穷小的应用，如果熟练程度不够的话，就很难看出突破点了。\\
+\paragraph{题目}
+确定常数$a,b,c$的值，使
+$$
+\lim_{x\rightarrow 0}{
+        \frac{ax-\sin{x}}
+            {
+                \int_{b}^{x}{
+                        \frac{
+                            \ln{(1+t^3)} }
+                            {t}
+                    dt}
+            }
+    }
+    =
+    c (c \neq 0)
+$$
+\paragraph{解答}
+这是一种题型，首先需要找到突破点，然后由已知的推测未知的。\\
+第一眼看到不定积分
+$
+\int_{b}^{x}{
+        \frac{
+            \ln{(1+t^3)} }
+            {t}
+    dt}
+$，肯定想到要采用求导去根号。\\
+然后可以写成等式：
+$$
+\lim_{x\rightarrow 0}{
+        ax-\sin{x}}
+        =
+c\lim_{x\rightarrow 0}{
+                \int_{b}^{x}{
+                        \frac{
+                            \ln{(1+t^3)} }
+                            {t}
+                    dt}
+           }
+$$
+根据P11的3的几个重要的等价无穷小公式(很重要，一定要非常熟练）:
+$$
+\lim_{x \rightarrow 0}{
+        \frac{\sin{x}}{x}
+    }
+    =1
+$$
+
+所以上面等式左边肯定为0\\
+所以右边也为0\\
+即：\\
+$$
+    \int_{b}^{x}{
+            \frac{
+                \ln{(1+t^3)} }
+                {t}
+        dt} = 0
+$$
+现在开始判断$b$的值\\
+$$
+g(t) = 
+    \frac{
+        \ln{(1+t^3)} }
+        {t}
+$$
+
+$$
+g(t) > 0
+\begin{cases}
+    t>1\\
+    1>=t>0\\
+    -1<t<0\\
+    t<-1
+\end{cases}
+$$
+所以
+$$
+\frac{
+    \ln{(1+t^3)} }
+    {t} > 0
+$$
+则，如果$b\neq 0$,则$
+    \int_{b}^{x}{
+            \frac{
+                \ln{(1+t^3)} }
+                {t}
+        dt} > 0$,矛盾\\
+因此，$b=0$\\
+参照P42的变限积分求导公式有\\
+$$
+\lim_{x\rightarrow 0}{
+        \frac{ax-\sin{x}}
+            {
+                \int_{b}^{x}{
+                        \frac{
+                            \ln{(1+t^3)} }
+                            {t}
+                    dt}
+            }
+    }
+    =
+\lim_{x\rightarrow 0}{
+        \frac{ax-\cos{x}}
+            {
+                \frac{
+                    \ln{(1+x^3)} }
+                    {x}
+            }
+    }
+    (2)
+$$
+根据P11的3的几个重要的等价无穷小公式(很重要，一定要非常熟练）:
+$$
+\lim_{x \rightarrow 0}{\ln{1+x} \sim x}
+$$
+所以$
+x \rightarrow 0,
+\frac{\ln{1+x^3}}{x}=
+\frac{x^3}{x}=
+x^2
+$
+所以
+$$
+(2)=
+\lim_{x \rightarrow 0}{
+    \frac{a-\cos{x}}
+        {x^2}
+}=\frac{1}{x^2} = c
+$$
+如果，$a\neq 1$,则$c\rightarrow \infty$,此与c为常数矛盾。\\
+所以，$a=1$\\
+$$
+\lim_{x \rightarrow 0}{
+    \frac{
+        1-\cos{x}
+    }{x^2}
+}
+$$
+仍旧参照P11，有$1-\cos{x}=\frac{1}{2}x^2$\\
+所以有$c=\frac{1}{2}$\\
+\paragraph{总结}
+这道题，是一个基础题型，而且涉及到很多等价无穷小,是一个比较好的题。 肯定有必要同时把有关的等价无穷小以及变限积分求导等公式具体练习一下，同时对于其他的公式，也好好看看。\\
+这些知识点一定要非常熟悉。\\
+
+
+\section{P19 例10}
+\paragraph{题型}
+看到类似$f(x)^{g(x)}$,肯定要用对数法：\\
+$$
+f(x)^{g(x)}
+=
+e^{
+    g(x)\ln{f(x)}
+    }
+$$
+然后对$g(x)\ln{f(x)}$进行讨论\\
+
+\paragraph{解答}
+首先，需要熟练$a^x$的求导公式：
+$$
+(a^x)' = a^x\ln{a}
+$$
+因为,$a_i$作为常数，必有$\lim_{x \rightarrow 0}{a_i^x=0}$\\
+所以\\
+$$
+\lim_{x \rightarrow 0}
+    {
+        \frac{
+            a_1^x\ln{a_1} +a_2^x\ln{a_2} +\cdots  + a_2^x\ln{a_2}   
+         }
+         {m}
+    }
+    =
+    \frac{1}{m}
+    \sum_{i=1}^{m}{\ln{a_i}}
+$$
+而$\ln{a} + \ln{b} = \ln{ab}$\\
+所以:
+$$
+e^{
+    \frac{1}{m}
+    \sum_{i = 1}^{m}{\ln{a_i}}
+    }
+    =
+    e^{
+        \frac{1}{m}
+        \ln{(a_1 a_2 \cdots a_m)}
+    }
+    =
+    \sqrt[\frac{1}{m}]{e^{\ln{(a_1 a_2 \cdots a_m)}}}
+$$
+
+\section{P15 例3}
+\paragraph{题型}
+这也是一个比较好的题型，在看到积分中有重复的形式,可以采用替换的方式简化\\
+
+\paragraph{解答}
+\paragraph{首先看分式分子}
+$$
+\int_{0}^{x}{(x-t)f(t)dt}
+$$
+首先明确，由$dt$可以知道，这个积分是对于$t$的积分，与$x$无关!积分只会对$t$进行处理，而将$x$可以作为常数对待。所以积分号里面的$x$可以提到外面。\\
+所以，
+$$
+\int_{0}^{x}{(x-t)f(t)dt}
+=
+x\int_{0}^{x}{f(t)dt}
+-
+\int_{0}^{x}{tf(t)dt}
+$$
+\paragraph{再看分式分母}
+$$
+x\int_{0}^{x}{f(x-t)dt}
+$$
+\paragraph{下面的步骤你好好思考一下，可以记录到笔记本里面多看看}
+当x在$f(x-t)$中，可以整体对积分号里面进行变换$x-t=u$\\
+\paragraph{其中比较复杂的是积分限的变换}
+先看$\int_{0}^{x}{f(x-t)dt}$\\
+其对$t$积分，$t$的积分范围是从0到x:$0 \rightarrow x$\\
+因为$u = x-t$\\
+于是，得到$u$的积分范围是$x-0 \rightarrow x-x$,即$x \rightarrow 0$
+于是得到：
+$$
+\int_{0}^{x}{f(x-t)dt}
+=
+\int_{x}^{0}{f(u)d(x-u)}
+=
+\int_{x}^{0}{f(u)d(-u)}
+$$
+
+\section{P8 例8}
+当 $x\neq 0$时，设$f(x) = \frac{(x^3-1)\sin{x}}{x^2+1)x}$,$g(x)=\frac{1}{x}\sin{\frac{1}{x}}$,下述命题\\
+\textcircled{1} 对任意$X>0$, 在$0< \left| x \right| <X$ 上$f(x)$有界，但在$(-\infty,+\infty)(x\neq 0)$ 上$f(x)$无界。\\
+\textcircled{2} 在$(-\infty,+\infty)(x \neq 0)$上$f(x)$有界。\\
+\textcircled{3} $g(x)$在$x=0$的去心领域内无界，但$\lim_{x\rightarrow 0}{g(x) \neq \infty}$.\\
+\textcircled{4} $\lim_{x \rightarrow 0}{g(x) = \infty}$\\
+正确的是:\\
+$C.$ \textcircled{2},\textcircled{3}\\
+\paragraph{题型}
+有关极限的判定题，主要就是找好求极限的趋向点或者方向\\
+同时，需要回顾一下有界无界的定义概念，防止自己记混了。
+\paragraph{解答}
+(1)对\textcircled{1}进行分析，可以判断涉及的极限趋向有$x\rightarrow 0+, x\rightarrow -\infty, x\rightarrow +\infty$.\\
+\paragraph{当$x\rightarrow 0+$时}
+参照等价无穷小的公式，有$\lim_{x\rightarrow 0}{\frac{\sin{x}}{x}=1}$,即$x\rightarrow 0, \sin{x}\sim x$.\\
+所以,
+$$
+f(x) = \lim_{x\rightarrow 0}{\frac{\sin{x}}{x}=1}
+= \lim_{x\rightarrow 0}{\frac{x^3-1}{x^2+1}} = -1
+$$
+而当$x=X$时，很明显$f(x)=f(X)$是一个常数。 由于$f(x)$是由初等函数组成，所以在$0<x<X$间连续,因此有界。\\
+\paragraph{接下来判定$x\rightarrow -\infty$时}
+$f(x)$的情况:\\
+$$\lim_{x \rightarrow -\infty}{\sin{x}\in[-1,1]}$$
+$$
+f(x) = \lim_{x\rightarrow -\infty}{\frac{(x^3-1)\sin{x}}{x^3+x}} 
+$$
+所以
+$$
+\lim_{x \rightarrow -\infty}{\left| f(x) \right| = \left|{
+        \frac{(x^3-1)\sin{x}}{x^3+x}
+    } \right|}
+<
+\lim_{x \rightarrow -\infty}{\left|{
+        \frac{x^3-1}{x^3+x}
+    } \right|}
+=1
+$$
+所以当$x\rightarrow +\infty$时，有界\\
+同样，当$x\rightarrow -\infty$时，有界\\
+(2) 对\textcircled{2}进行分析\\
+在(1)中已经判定，当$x\rightarrow 0+, x\rightarrow +\infty, x\rightarrow -\infty$时，均有界。\\
+\paragraph{下面继续判定$x\rightarrow -0$时}
+$$
+x\rightarrow 0, \sin{x} \sim x
+$$
+所以
+$$
+x\rightarrow -0,
+f(x) \sim \frac{(x^3-1)x}{(x^2+1)x}
+=
+-1
+$$
+因为在其他情况下，$f(x)$连续，所以$f(x)$在$(-\infty, +\infty)$上有界\\
+(3) 对\textcircled{3}进行分析\\
+判定$g(x)$在去心邻域的情况，必定想到$g(x)$在$x\rightarrow 0-$和$x\rightarrow 0+$两种情况.\\
+在任何情况下,$\sin{\frac{1}{x}} \in [-1, 1]$\\
+因为$x\rightarrow 0, \frac{1}{x}\sim \infty$
+所以，由于$\frac{1}{x}$值的不定，使得$\sin{\frac{1}{x}}$的值周期不定。
+所以,可以取定 $\frac{1}{x}=\frac{1}{2}\pi + k\pi$
+$$
+g(x)=
+\sim_{x\rightarrow 0}{\left| g(x) \right|}
+= 
+\sim_{x\rightarrow 0}{\frac{1}{x}} \rightarrow \infty 
+$$
+所以，$g(x)$无界得证。
+那么，此时是否能够认为$x\rightarrow 0, g(x)\rightarrow \infty$?\\
+不能！
+当取定$\frac{1}{x}=k\pi,k\in N, k\rightarrow \infty$时，
+$$
+x\rightarrow 0, g(x) = 0
+$$
+所以，$\lim_{x\rightarrow 0}{g(x)} \neq 0$\\
+\textcircled{3}正确。\\
+(4) 参照(3),明显\textcircled{4}是错误的。
+
+\section{P236 例9}
+\paragraph{参照线性代数教科书P16 行列式按行列展开}
+按照第i行展开，那么
+$$
+A = a_{i1}A_{i1} + a_{i2}A_{i2} + \cdots + a_{in}A_{in}
+$$
+其中 $A_{ij} = (-1)^{i+j}M_{ij}$ 叫做$a_{ij}$的代数余子式。\\
+$(-1)^{i+j}$为其符号\\
+$M_{ij}$为其余子式，是行列式$A$去掉$i$行$j$列($a_{ij}$所在行列)后余下来的新行列式.\\
+
+例如，按照第一列展开
+$$
+\begin{vmatrix}
+a_{11}    &   a_{12}    &   a_{13}\\
+a_{21}    &   a_{22}    &   a_{23}\\
+a_{31}    &   a_{32}    &   a_{33}
+\end{vmatrix}
+=
+$$
+$$
+(-1)^{(1+1)}a_{11}
+\begin{vmatrix}
+   a_{22}    &   a_{23}\\
+   a_{32}    &   a_{33}
+\end{vmatrix}
++
+$$
+$$
+(-1)^{(2+1)}a_{21}
+\begin{vmatrix}
+   a_{12}    &   a_{13}\\
+   a_{32}    &   a_{33}
+\end{vmatrix}
++
+(-1)^{(3+1)}a_{31}
+\begin{vmatrix}
+   a_{12}    &   a_{13}\\
+   a_{22}    &   a_{23}\\
+\end{vmatrix}
+$$
+\paragraph{把形式写完整一点就很清晰了}
+$$
+\begin{vmatrix}
+2a  &   1   &   0   &   0       &       \ddots  &   \cdots\\
+a^2 &   2a  &   1   &   0       &       \ddots  &   \cdots\\
+0   &   a^2 &   2a  &   0       &       \ddots  &   \cdots\\
+0   &   0   &   a^2 &   2a      &       \ddots  &   \cdots\\
+0   &   0   &   0   &   \ddots  &       \ddots  &   \cdots\\
+0   &   0   &   0   &   0       &       \ddots  &   1\\ 
+0   &   0   &   0   &   0       &       a^2     &   2a\\ 
+\end{vmatrix}
+$$
+
+\section{P242 7}
+\paragraph{对最后一行展开,配合三角行列式的性质}
+把书上P16 行列式按行列展开部分看看，结合全书P230几个重要公式练习熟悉。
+
+
+\end{multicols}
+\end{document}
+
+

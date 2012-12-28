@@ -1,0 +1,193 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{pstricks}
+\usepackage{graphics,graphicx}
+\usepackage{pst-plot}
+\usepackage{color}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]
+  {FangSong}
+
+\author{Chunwei Yan}
+\title{全书解答6.1}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+\section{P163例49}
+\subsection{知识点}
+\par 此题也是基于对称性的二元函数积分。
+判断其关于$y=x$对称，需要两个条件：
+\begin{enumerate}
+    \item 积分域关于$y=x$对称
+    \item 积分函数中，x和y对换，形式不变
+\end{enumerate}
+
+\subsection{解答}
+\subsubsection{极坐标}
+\par 我之前有写过一个极坐标的文档，可以对照那个文档看看。
+\par 这里就简单回顾，如图，是一个极坐标，$A(\theta,\rho)$
+\par 同时可以看到，如果在直角坐标下，$x=\rho \cos{\theta}$，$y=\rho \sin{\theta}$，如此，A的直角坐标为$A(\rho \cos{\theta}, \rho \sin{\theta})$
+
+\begin{center}
+\begin{pspicture}(-1,-1)(4,4)
+%\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt](-3,-3)(3,3)
+%--坐标轴
+\psline[linewidth=1pt,linearc=0]{->}(0, 0)(3.5, 0)
+\psline[linestyle=dashed,dash=3pt 2pt,linewidth=1pt,linearc=0]{->}(0, 0)(0, 3.5)
+
+%-- 弧形
+\pswedge[linecolor=gray,linewidth=1pt,fillstyle=solid]{.5}{0}{45}
+
+\psline[linewidth=1pt,linearc=0]{->}(0, 0)(2, 2)
+\psline[linestyle=dashed,dash=3pt 2pt, linewidth=1pt,linearc=0]{-}(2, 0)(2, 2)
+%--标注
+\rput[br](0, 0){O}
+\rput[bl](.5, .2){$\theta$}
+\rput[bl](2, 2){A}
+\rput[tl](1, -.2){$\rho \cos{\theta}$}
+\rput[bl](2.2, 1){$\rho \sin{\theta}$}
+\end{pspicture}
+\end{center}
+
+\subsubsection{方法一、用极坐标解}
+\par 极坐标下的二元函数积分的具体内容参照P1160页
+\par 固定公式需要记住，分为极点O在区域D内部、边界和外部3种情况。
+\par 这里O是区域的圆心，利用内部的那种情况
+\begin{equation}
+\iint_{D}{f(x,y)d\sigma} = \int_{\alpha}^{\beta}\int_{\rho_1(\theta)}^{\rho_2(\theta)}{f(\rho\cos{\theta},\rho\sin{\theta})\rho d\rho }
+\end{equation}
+\par 其中，将 $x=\rho \cos{\theta}$，$y=\rho \sin{\theta}$代入，可以直接得到
+\begin{equation}
+\int_{0}^{2\pi}\int_{0}^R{
+    (
+        \frac{\cos^2{\theta}}{a^2}
+        +
+        \frac{\sin^2{\theta}}{b^2}
+    )
+    \rho^3d\rho
+}
+\end{equation}
+\par 后面对$\rho$求积分，前面$\theta$不需要动
+\begin{equation}
+= \frac{R^4}{4}
+\int_0^{2\pi}
+{
+    \frac{\cos^2{\theta}}{a^2}
+    +
+    \frac{\sin^2{\theta}}{b^2}
+    d\theta
+}
+\end{equation}
+\par 再后面把$\cos^2{\theta}$和$\sin^2{theta}$分开积分，这里只列出$\cos^2{\theta}$的积分
+\begin{equation}
+\int_0^{2\pi}
+{
+    \frac{cos^2{\theta}}{a^2} d \theta
+}
+=
+\frac{1}{a^2}
+\int_0^{2\pi}
+{
+    \frac{\cos{2\theta} + 1}{2} d\theta
+}
+\end{equation}
+剩下的就是普通的积分了，算出来就是最后的结果了。
+\textbf{\textcolor{red}{需要多看看极坐标求积分适用的范围}}
+
+\subsubsection{方法二、用对称的方法求解}
+\par 直接目测，利用上面介绍的方法也能够判定其对称
+\par 于是， $x,y$可以互换
+\par 底下就按照解答
+
+\section{P164例52}
+\par 这个是先x后y的积分
+\par 具体
+\begin{equation}
+\int_{0}^{1}{dy} \int_{y^2}^{y}
+{
+    \frac{\sin{y}}{y}dx
+}
+\end{equation}
+\par 代表的是，从前往后看，y从0到1,x从$y^2$到$y$
+\par 为什么是x从$y^2$到$y$，而不是从$y$到$y^2$
+\par 可以再图像中央画一条横线，可以看到其与弧形阴影有两个交点，按照x轴的方向从左往右看，就是$x=y^2$到$x=y$
+\par 在积分的时候，注意前后的顺序，先后面对$x$积分，所以即使里面有$y$，也没有影响，把$y$当做常量，可以提到前面去。
+\begin{equation}
+=
+\int_{0}^{1}{\frac{\sin{y}}{y}dy} \int_{y^2}^{y}
+{
+    dx
+}
+=
+\int_{0}^{1}{(y-t^2)\frac{\sin{y}}{y}dy}
+\end{equation}
+\begin{equation}
+= \int_{0}^{1}{
+        \{
+            \sin{y} - y\sin{y}
+        \}dy
+    }
+\end{equation}
+\par 分开进行计算
+\par $\int_{0}^{1}{\sin{y}dy}$很容易计算，而
+$
+\int_{0}^{1}{\sin{y}dy}
+$
+\par 是一个标准的分部积分的例子，\textbf{\textcolor{red}{需要回顾之前的分部积分的内容,全书P89，做几道典型题找找感觉}}
+\par 我这里直接用不定积分求出其原函数，然后可以代入值计算
+\begin{equation}
+\int{y\sin{y}dy}
+=
+\int{yd\cos{y}}
+= y\cos{y} - \int{\cos{y} dy}
+\end{equation}
+\par 已经一目了然了，然后代入值就能解出了
+\par \textbf{\textcolor{red}{不定积分和定积分的求解方法是基础中的基础，一定要很熟练，如果有点生疏的话，得回头好好看看。 这个知识点会穿插到大部分题目里面，很关键}}
+
+\section{P165例54}
+\par 方法三采用的是移动圆形的方法，可以看到图中的圆心x轴方向偏离$\frac{1}{2}$,y轴方向偏离$\frac{1}{2}$。
+\par 通过$x-\frac{1}{2}$和$y-\frac{1}{2}$将圆心重新调到零点处。当调到零点后，就可以采用\textbf{对称}拆分的方法，极大地减少计算量
+\par 由于积分区域D此时关于x和y均对称,而积分函数$f(x,y) = x+y$,在x轴右边$x=a$为$f(a,y)=a+y$,在左边对称的地方$x=-a$为$f(-a,y) = -a + y$,左右加起来为0， 同样，y轴上下加起来也为0，如此结果为0
+
+\subsection{总结}
+\par 看看例55,可以看到它也可以用移动的方法求解，整体将其向下移动1个单位($y-1$)，可以使其关于x轴对称，然后就可以用对称的方法了。
+\par 好好品味这里的典型题，利用一些技巧，降低计算量
+\par 而且，这些技巧是真题里面最提倡的，好好做做，好好总结
+
+\section{P166例55}
+\subsection{方法一第7行的式子来源}
+\par 前面提到平移的方法，$y-1$就是把图形整体向下平移1个单位，然后那个圆弧正好以原点为圆心，利用极坐标，就得到那个式子了。
+\subsection{方法二第一行最后一个式子}
+\par 还是极坐标那边的知识，好好看看我附件里面的那个PPT
+
+\begin{center}
+\begin{pspicture}(-4,-2)(4,4)
+\psaxes[labels=none,ticks=none]{->}(0,0)(-3.5,-2.7)(3.5,4)
+%--坐标轴
+\pswedge[linecolor=black,linewidth=2pt,fillstyle=solid](0,1.5){1.5}{90}{270}
+\psline[linestyle=dashed,dash=3pt 2pt, linewidth=1pt,linearc=0]{-}(0, 0)(-1.5, 2)
+\psline[linestyle=dashed,dash=3pt 2pt, linewidth=1pt,linearc=0]{-}(0, 0)(-.7, 2.7)
+
+\pswedge[linecolor=red,linewidth=1pt,fillstyle=none](0,0){.5}{0}{100}
+\pswedge[linecolor=blue,linewidth=1pt,fillstyle=none](0,0){.8}{0}{125}
+
+\rput[bl](0, 0){O}
+\rput[bl](0, 2){A}
+\rput[bl](-2, 0){B}
+\end{pspicture}
+\end{center}
+\par 如图，极坐标的角度只从原点开始，从x轴正方向开始算
+\par 因此，角度范围为从y轴正轴到x轴的负轴，算成角度就是$\frac{\pi}{2}$到$\pi$(切线)
+
+
+
+
+
+
+%------ end content --------------
+\end{multicols}
+\end{document}

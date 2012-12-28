@@ -1,0 +1,245 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+\usepackage{amsmath}
+\usepackage{color}
+\author{Chunwei Yan}
+
+\title{第一章\quad 函数与极限}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+%\setCJKmainfont{WenQuanYi Micro Hei Mono}
+%\setCJKmainfont{FangSong}
+\setCJKmainfont{KaiTi}
+\DeclareMathSizes{13}{13}{8.7}{7.5}
+
+\begin{document}\large
+%------------------- begin document ------------------------
+    \maketitle
+
+\section{前言}
+这些都是摘录的书上觉得比较有代表性的一些基础题,比较简单,但是重要的是透出的后面的知识点. 
+好好做,每一道题都应该掌握了.
+
+这段时间你在复习后面的内容,可以回头做做前面的小题,最重要的是复习一下前面的题型和知识点.
+
+\section{题目}
+
+%========== section 1 
+\subsection{第三节 \quad 函数的极限}
+\paragraph{P34 \quad 例6}
+函数
+$$
+f(x)=
+\begin{cases}
+\begin{array}{ll}
+x-1 &   x<0\\
+0   &   x=0\\
+x+1 &   x>0\\
+\end{array}
+\end{cases}
+$$
+当$x\rightarrow 0$ 时,证明$f(x)$的极限不存在.
+
+%========== section 2
+\subsection{第四节 \quad 无穷小与无穷大}
+\textbf{注意}无穷小指$x \rightarrow 0$,而无穷大指
+            $x \rightarrow +\infty$ or $x \rightarrow -\infty$.
+
+%========== section 3
+\subsection{第五节 \quad 极限运算法则}
+
+%.1-5 习题
+\textcolor{red}{\textbf{P48 \quad 习题\quad 1-5}}
+\paragraph{1\quad 计算下列极限}
+
+%---- 1(8)
+\subparagraph{(8)}
+$$
+\lim_{x \rightarrow \infty}
+     {
+         \frac
+         {
+             x^2 + x
+         }
+         {
+             x^4 - 3x^2 + 1
+         }
+     }
+$$
+
+%---- 1(11)
+\subparagraph{(11)}
+$$
+\lim_{n \rightarrow \infty}
+    {
+        1 + \frac{1}{2} + \frac{1}{4} + \cdots + \frac{1}{2^n}
+    }
+$$
+
+%---- 2(1)
+\paragraph{3\quad 计算下列极限}
+\subparagraph{(1)}
+$$
+\lim_{x \rightarrow 2}
+     {
+         \frac{x^3 + 2x^2}
+              {(x-2)^2}
+     }
+$$
+
+\paragraph{3\quad 计算下了极限}
+\subparagraph{(2)}
+$$
+\lim_{x \rightarrow \infty }
+     {
+         \frac{ \arctan{x} } {x}
+     }
+$$
+
+%========== section 6
+\subsection{第六节\quad 极限存在准则\quad 两个主要极限}
+\textcolor{red}{\textbf{P55 \quad 习题\quad 1-6}}
+
+\paragraph{1. 计算下列极限}
+\subparagraph{(5)}
+$$
+\lim_{x \rightarrow 0}
+     {
+         \frac{1 - \cos{2x}} 
+              {x \sin{x}}
+     }
+$$
+
+\subparagraph{(6)(x为不等于0的常数)}
+$$
+\lim_{x \rightarrow \infty}
+     {
+         2^n \sin{\frac{x}{2^n} }
+     }
+$$
+
+
+%========== section 7
+\subsection{第七节\quad 无穷小的比较}
+\textcolor{red}{\textbf{P59 \quad 习题\quad 1-7}}
+
+\paragraph{4.利用等价无穷小的性质,求下列极限}
+\subparagraph{(2)(n,m 为正整数)}
+$$
+\lim_{x \rightarrow 0}
+     {
+         \frac{\sin{x^n}}
+              {(\sin{x})^m}
+     }
+$$ 
+
+%========== section 8
+\subsection{第八节 \quad  函数的连续性和间断性}
+\textcolor{red}{\textbf{P64 \quad 习题\quad 1-8}}
+\paragraph{}
+讨论函数 $f(x) = \lim_{n \rightarrow \infty} { \frac{1 - x^{2n}} {1 + x^{2n}} }$ 的连续性,若有间断点,判断其类型.
+
+%========== section 9
+\subsection{第九节\quad 连续函数的运算与初等函数的连续性}
+\paragraph{P68 \quad 例题}
+\subparagraph{例6}
+求$\lim_{x \rightarrow 0}
+     {
+         \frac{
+             \log_{a}{(1+x)}
+            }{x}
+     }$
+
+\subparagraph{例7}
+求 $\lim_{x \rightarrow 0}
+     {
+         \frac{a^x - 1}{x}
+     }$
+
+\subparagraph{例8}
+求 $\lim_{x \rightarrow 0}
+     {
+         (1 + 2x)^{\frac{3}{\sin{x}}}
+     }$
+
+
+\subsection{P73 总习题一}
+\paragraph{8.求下列极限}
+%--- 8(1)
+\subparagraph{(1)}
+$$
+\lim_{x \rightarrow 1}
+     {
+         \frac{x^2 - x + 1}
+              {(x-1)^2}
+         }
+$$
+
+%--- 8(5)
+\subparagraph{(5)}
+$$
+\lim_{x \rightarrow 0}
+     {
+         (
+            \frac{a^x + b^x + c^x}
+                 {3}
+         )^ {\frac{1}{x}}
+     }.
+     (a>0,b>0,c>0)
+$$
+
+\newpage
+\section{知识点练习}
+\subsection{几个重要的等价无穷小}
+
+\paragraph{$x \rightarrow 0$}
+
+%--table
+\begin{center}
+    \begin{tabular}{ | p{2.5cm} | l | p{2.5cm} | l |}
+        %----------
+        $\sin{x}\sim$ & 
+        \underline{\hbox to 30mm{}} &
+        $(1+x)^\frac{1}{x}=$ &
+        \underline{\hbox to 30mm{}} \\
+        %----------
+        $\sin{x} \sim$  &
+        \underline{\hbox to 30mm{}} &
+        $\tan{x} \sim$   &
+        \underline{\hbox to 30mm{}} \\
+        %----------
+        $1 - \cos{x} \sim $         &
+        \underline{\hbox to 30mm{}} &
+        $e^x - 1 \sim$              &
+        \underline{\hbox to 30mm{}} \\
+        $\ln{1+x} \sim$             &
+        \underline{\hbox to 30mm{}} &
+        $(1+x)^a - 1 \sim$          &
+        \underline{\hbox to 30mm{}} \\
+        $\arcsin{x} \sim$           &
+        \underline{\hbox to 30mm{}} &
+        $\arctan{x} \sim$           &
+        \underline{\hbox to 30mm{}} \\
+        $a^x - 1 \sim$              &
+        \underline{\hbox to 30mm{}} &
+        $x^m + x^k(k>m>0) \sim$       &
+        \underline{\hbox to 30mm{}} \\
+    \end{tabular}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+%------------------- end document ------------------------
+\end{document}
+

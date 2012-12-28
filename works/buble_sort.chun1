@@ -1,0 +1,42 @@
+parse the string to array
+
+$s1 <- array;
+$t0 <- i;   #int i, j, tmp;
+$t1 <- j;
+$t2 <- N;
+$t3 <- tem;
+
+$t4 <- a
+$t5 <- b
+$t6 <- temaddress
+$t7 <- temaddress 
+
+set $t0 0   #i=0;
+
+outer_loop:
+    tem = N-1
+    if i==tem goto output
+    j = i + 1
+    goto inner_loop
+
+loopi:
+    i++
+    goto outer_loop
+
+inner_loop:
+    if j==N goto loopi:
+    get a arr[i]
+    get b arr[j]
+
+    if a>b:
+        tem = b
+        array[j] = a
+        array[i] = tem
+    j++
+
+output:
+    #output the array
+    for (i=0; i<N; i++)
+        print i
+
+

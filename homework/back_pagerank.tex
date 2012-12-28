@@ -1,0 +1,99 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{pstricks}
+\usepackage{multicol}
+\usepackage{pst-plot}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{Back Pagerank}
+\begin{document}
+    \maketitle
+%---content here----
+\begin{multicols}{2}
+\section{原始模型}
+%---------图片一-------
+\begin{center}
+\begin{pspicture}(-1,-1)(4,4)
+
+\pscircle[linewidth=1pt](0,0){0.4}
+\pscircle[linewidth=1pt](2,2){.4}
+\pscircle[linewidth=1pt](0,2){0.4}
+\pscircle[linewidth=1pt](2,0){0.4}
+\pscircle[linewidth=1pt](3,0){0.4}
+
+\rput[br]{*0}(0,0){\emph{A}}
+\rput[br]{*0}(2,2){\emph{B}}
+\rput[br]{*0}(0,2){\emph{C}}
+\rput[br]{*0}(2,-0.3){\emph{D}}
+\rput[br]{*0}(3,-0.3){\emph{E}}
+
+\psline[linewidth=1pt,linearc=0]{->}(0,0)(0,2)
+\psline[linewidth=1pt,linearc=0]{->}(2,2)(0,2.2)
+\psline[linewidth=1pt,linearc=0]{->}(0,2)(2,0.2)
+\psline[linewidth=1pt,linearc=0]{->}(0,2)(3,0.2)
+\end{pspicture}
+\end{center}
+\begin{center}
+$Figure 1$
+\end{center}
+如部分图$Figure 1$,只考虑C节点的情况\\
+之前课上想到的模型由三部分组成:
+\begin{enumerate}
+    \item 原始的按照链接指向的漫步到C的概率 $\frac{P_A}{L_A} + \frac{P_B}{L_B}$
+    \item 某种情况下从C退回的概率 $\frac{\frac{P_A}{L_A}}{P_C} +\frac{\frac{P_B}{L_B}}{P_C}$
+    \item 随机漫步到任何一个节点的概率 $\frac{1}{N}$
+\end{enumerate}
+进行组合，得到最初的模型，也就是课上演示的模型：
+$$
+P_C = k[\frac{P_A}{L_A} + \frac{P_B}{L_B}] + 
+    (1-k)
+    \{
+        \alpha [
+        \frac{\frac{P_A}{L_A}}{P_C} +
+        \frac{\frac{P_B}{L_B}}{P_C} 
+        ]
+        +
+        (1-\alpha) \frac{1}{N}
+    \}
+$$
+其中，$\alpha$是back操作的概率\\
+但是，这个模型很明显是错误的，主要有如下问题：
+
+\begin{enumerate}
+    \item 从C退回的概率并不能算入C的权重中，而应该是从C指向的其他节点退回的概率参与C权重的计算
+    \item 如果把Walker沿着链接指向访问各节点作为正常的访问方式，那么退回操作(back)是否应该看做和Walker随机选取一个节点访问同类型的操作
+\end{enumerate}
+
+\section{新模型}
+\begin{enumerate}
+    \item 将Back操作作为一种权重的回赠，如在$Figure 1$中，$C$指向$D$，则在$D$中会有一定的几率通过Back操作回赠一部分权重给$C$
+    \item Back作为在图中访问的一种普通的操作，即Walker在沿着链接漫游和随机选取一个节点漫游时，均可能有Back操作,假设
+        \item 在沿着链接漫游时，back操作的概率为$\alpha$
+\end{enumerate}
+
+如此，同样将模型分为三个部分：
+\begin{enumerate}
+    \item 原始的按照链接指向的漫步到C的概率 $\frac{P_A}{L_A} + \frac{P_B}{L_B}$
+    \item 在其他节点，通过back操作返回到C的概率，$\frac{\frac{P_C}{L_C}}{P_D} +\frac{\frac{P_C}{L_C}}{P_E}$ 
+    \item Random Walker 随机选择一个节点访问，选到C的概率 $\frac{1}{N}$
+\end{enumerate}
+最终的模型是
+$$
+P_C = k[\frac{P_A}{L_A} + \frac{P_B}{L_B}] + 
+    (1-k)
+    \{
+        \alpha [
+        \frac{\frac{P_C}{L_C}}{P_D} +
+        \frac{\frac{P_C}{L_C}}{P_E} 
+        ]
+        +
+        (1-\alpha) \frac{1}{N}
+    \}
+$$
+
+
+\end{multicols}
+\end{document}
+
+

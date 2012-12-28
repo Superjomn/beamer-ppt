@@ -1,0 +1,70 @@
+main:       la $
+
+input:
+
+
+             
+sort:       addi    $sp, $sp, -20       #在堆中为5阿寄存器开出空间
+            sw      $ra, 16($sp)        #将ra保存到堆栈
+            sw      $s3, 12($sp)
+            sw      $s2, 8($sp)
+            sw      $s1, 4($sp)
+            sw      $s0, 0($sp)
+        
+            move    $s2, $a0
+            move    $s3, $a1
+
+            move    $s0, $zero          # i=0
+            # i <=> $s0    j <=> s1
+forlist:    slt     $t0, $s0, $a3       #如果 $s0>=$s3 (i>=n) $t0=0
+            beq     $t0, $zero, ext1    #if $s0 >= $s3 goto exit1
+
+            addi    $s1, $s0, -1        # j=i-1
+#inner loop
+for2tst:    slti    $t0, $s1, 0         #if $s1<0 then set $t0 1
+            bne     $t0, $zero, exit2   #goto exit2 if $t0 = 1
+            sll     $t1, $s1, 2         #$t1 = $s1 << 2 = $s1 * 4
+            add     $t2, $s2, $t1       #$t2 = $s2 + $t1 = $s2 + $s1 * 4
+                                        #   $t2 = v + (j*4)
+            lw      $t3, 0($t2)         #$t3 = v[j]
+            lw      $t4, 4($t2)         #$t4 = v[j+1]
+            slt     $t0, $t4, $t3       #$t0 = $t4 > $t3 ? 0 : 1
+            beq     $t0, $zero, exit2   #if $t4 > $t3 then goto exit2
+                                        #{...}
+                                        #else{
+            move    $a0, $s2            #set $a0 = v
+            move    $a1, $s1            #set $a1 = j
+            jal     swap                #goto swap
+
+            addi    $s1, $s1, -1        #j -= 1
+            j       for2tst             #return
+
+swap:       sll     $t1, $a1, 2         #$t1 = k * 4
+            add     $t1, $a0, $t1       #$t1 = v + k * 4
+            lw      $t0, 0($t1)         #$t0 (tem) = v[k]
+            lw      $t2, 4($t1)         #$t2 = v[k+1]
+            sw      $t2, 0($t1)         #v[k] = $t2
+            sw      $t0, 4($t1)         #$t0 (temp)
+
+exit2:      addi    $s0, $s0, 1         #i += 1
+            j       for2tst             #return
+
+#
+exit1:      lw      $s0, 0($sp)         
+            lw      $s1, 4($sp)         
+            lw      $s2, 8($sp)         
+            lw      $s3, 12($sp)         
+            lw      $ra, 16($sp)         
+            addi    $sp, $sp, 20
+
+            jr      $ra                 #return to main
+                
+
+
+
+
+            
+            
+
+
+

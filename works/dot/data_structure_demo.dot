@@ -1,0 +1,22 @@
+graph graphname {
+    label="Style Tree"
+    body[label="body{ElementNode}"]
+    data_body[label="DataNode" style=filled, color=".7 .3 1.0"]
+    stylenode[label="<p><p>{StyleNode}" , shape=box, style=filled, color=lightblue]
+    e1[label="<p>{ElementNode}"]
+    e2[label="<p>{ElementNode}"]
+    data_e1[label="DataNode" style=filled, color=".7 .3 1.0"]
+    data_e2[label="DataNode" style=filled, color=".7 .3 1.0"]
+
+    //style
+    body -- stylenode
+
+    stylenode -- e1
+    stylenode -- e2
+
+    //datanode
+    body -- data_body
+    e1 -- data_e1
+    e2-- data_e2
+}
+

@@ -1,0 +1,5 @@
+graph graphname {
+    node [shape = record]
+    struct1 [label="{<f0>author<f1>book} | "]
+}
+
