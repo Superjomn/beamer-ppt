@@ -1,0 +1,12 @@
+﻿Due to the limitations of the supported zip file format, the following file(s) had to be renamed.
+
+Original File Name  ->  New File Name
+密码社交网络.docx -> File1.docx
+图片5.png -> File2.png
+图片4.png -> File3.png
+图片1.png -> File4.png
+图片2.png -> File5.png
+图片3.png -> File6.png
+云计算安全关键技术分析.pdf -> File7.pdf
+图片6.png -> File8.png
+云计算_从云安全到可信云.pdf -> File9.pdf
