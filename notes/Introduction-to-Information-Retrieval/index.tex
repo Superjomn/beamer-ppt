@@ -1,0 +1,47 @@
+\documentclass[a4paper]{ctexart}
+\usepackage{geometry}
+\usepackage{pstricks}
+\usepackage{multicol}
+\usepackage{pst-plot}
+\usepackage{amsmath}
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\author{Chunwei Yan}
+\title{Introduction to Information Retrieval\\信息检索导论}
+\begin{document}
+    \maketitle
+
+    \section{文本分类问题}
+    \par 文本分类的目标是： 利用某个分类函数(classification function)，能够将文档映射到类别:
+
+    \begin{equation}
+        \Upsilon :X\rightarrow C
+    \end{equation}
+    \par 监督学习
+
+    \section{Text classification and Naive Bayes}
+    \par the probability of document d in class c is calculated as
+    \begin{equation}
+        P(c|d) \sim P(c) \Pi_{1\le k \le n_{d}}{P(t_{k}|c)}
+    \end{equation}
+    \begin{itemize}
+        \item $P(c)$ is the prior probability of document occuring in class c.
+        \item ${P(t_{k}|c}$ is the conditional probability of term k occuring in a document of class c.
+    \end{itemize}
+    \par the best class in NB is the most likely or MAP class $C_{map}$.
+    \begin{equation}
+        c_map = arg\max_{c \in C}\hat{P}(c|d) = arg \max_{c \in C} \hat{P}(c)\Pi_{1 \le k \le n_{d}} \hat{P}(t_{k} | c)
+    \end{equation}
+
+
+
+    
+    
+    
+    
+    
+    
+
+
+\end{document}
+
