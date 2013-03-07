@@ -1,0 +1,198 @@
+\documentclass{beamer}
+\usepackage{ctex} %注意这个宏包
+\usepackage{color}
+\usepackage{graphics,graphicx}
+\usepackage{pstricks,pst-node,pst-tree}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\CTEXoptions[today=old]
+\setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}] {WenQuanYi Micro Hei Mono}
+\title{Learning HMM Structure for Information Extraction}
+\author{Speaker:\\Chunwei Yan}
+\institute[PKUSZ]{
+    互联网研发中心\\
+}
+\date{\today}
+
+\begin{document}
+% ------------- title page ----------------------------
+%--- the titlepage frame -------------------------%
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Begin}
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Basics of HMM}
+\begin{frame}{Introduction to HMM}
+\begin{block}{Compositions of HMMS }
+    \begin{itemize}
+        \item a set of states Q \{$q_I, q_0, q_1, \cdots q_F$\}
+        \item a set of transitions between states $(q \rightarrow q')$
+        \item a discrete vocabulary of output symbols $\sum = \{ \sigma_1, \sigma_2, \cdots, \sigma_M\}$
+    \end{itemize}
+\end{block}
+
+\begin{block}{Parameters of the Model}
+\begin{itemize}
+    \item the transition probabilitis : $P(q \rightarrow q')$
+    \item the emission probabilitis: $P(q \uparrow \sigma)$ 
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{HMM Usage Basics}
+    The probability of a string x being emitted by an HMM M is computed by:
+    \begin{equation}
+    P(x|M) = \sum_{q_1,\cdots,q_l \in Q^t} {
+        \prod_{k=1}^{l+1}{
+            P(q_{k-1} \rightarrow q_k) P(q_k \uparrow x_k)
+        }
+    }
+    \end{equation}
+    To recover the state sequence $V(x|M)$ that has the highest probability of having produced an observation sequence y:
+    \begin{equation}
+    P(x|M) = \sum_{q_1,\cdots,q_l \in Q^t} {
+        \prod_{k=1}^{l+1}{
+            P(q_{k-1} \rightarrow q_k) P(q_k \uparrow x_k)
+        }
+    }
+    \end{equation}
+\end{frame}
+
+\begin{frame}{ Information Extraction from Research Paper Headers}
+    \begin{block}{Learn Model Parameters}
+        \begin{itemize}
+            \item each state is associated with a class, such as \textbf{title}, \textbf{author}, \textbf{address} and so on.
+            \item learn the class-specific unigram distributions and the state transition probabilities from  data.
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{ To label a new header}
+        \begin{itemize}
+            \item treat the words from the header as observations
+            \item recover the most-likely state sequence with \textbf{Viterbi algorithm}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{Learning Model Structure from Data}
+\begin{frame}{Introduction}
+    \textbf{How many states the model should contain?}
+    \begin{block}{ Alternatives}
+        \begin{itemize}
+            \item simply assigning one state per class
+            \item build a model with multple states per class
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% contents 
+\begin{frame}{Model Learning Process}
+    \begin{enumerate}
+        \item each word is assigned its own state
+        \item neighbor-merging
+        \item deep merging
+            \begin{itemize}
+                \item V-merging
+                \item M-merging
+                \item Bayesian model merging
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Model Learning Process}
+    \begin{enumerate}
+        \item \textcolor{red} {\textbf{Assigning Each word its own state}}
+        \item Neighbor-merging
+        \item Deep merging
+            \begin{itemize}
+                \item V-merging
+                \item M-merging
+                \item Bayesian model merging
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Assigning Each word its own state}
+    Each word in the training data is assignd its own state, which transitions to the state of the word that follows it.
+    \textbf{!!!!Picture}
+\end{frame}
+
+\begin{frame}{Model Learning Process}
+    \begin{enumerate}
+        \item Assigning Each word its own state
+        \item \textcolor{red} {\textbf{Neighbor-merging}}
+        \item Deep merging
+            \begin{itemize}
+                \item V-merging
+                \item M-merging
+                \item Bayesian model merging
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Neighbor-merging}
+    Combines all states that share a transition and have the same class label.    
+    \textbf{!!!!Picture}
+\end{frame}
+
+\begin{frame}{Model Learning Process}
+    \begin{enumerate}
+        \item Assigning Each word its own state
+        \item Neighbor-merging
+        \item \textcolor{red} {Deep merging}
+            \begin{itemize}
+                \item \textcolor{red} {\textbf{ V-merging}}
+                \item M-merging
+                \item Bayesian model merging
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{V-merging}
+    merges any two states that have the same label and share transitions from or to a common state. 
+    \textbf{!!!!Picture}
+\end{frame}
+
+\begin{frame}{Model Learning Process}
+    \begin{enumerate}
+        \item Assigning Each word its own state
+        \item Neighbor-merging}}
+        \item \textcolor{red} {Deep merging}
+            \begin{itemize}
+                \item V-merging
+                \item \textcolor{red} {\textbf{M-merging}}
+                \item \textcolor{red} {\textbf{Bayesian model merging}}
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{M-merging and Bayesian Model Merging}
+\begin{block}{M-merging}
+    
+\end{block}
+
+\begin{block}{Bayesian Model Merging}
+    
+\end{block}
+\end{frame}
+
+
+
+\section{Experimental Results}
+\begin{frame}{Introduction}
+
+\end{frame}
+
+\section{Conclude}
+
+
+
+\end{document}
