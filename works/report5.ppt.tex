@@ -31,24 +31,24 @@
 
 \section{Basics of HMM}
 \begin{frame}{Introduction to HMM}
-\begin{block}{Compositions of HMMS }
+\begin{block}{HMM组成 }
     \begin{itemize}
-        \item a set of states Q \{$q_I, q_0, q_1, \cdots q_F$\}
-        \item a set of transitions between states $(q \rightarrow q')$
-        \item a discrete vocabulary of output symbols $\sum = \{ \sigma_1, \sigma_2, \cdots, \sigma_M\}$
+        \item 状态集合 Q \{$q_I, q_0, q_1, \cdots q_F$\}
+        \item 状态间的转移 $(q \rightarrow q')$
+        \item 一个有限的观测集合 $\sum = \{ \sigma_1, \sigma_2, \cdots, \sigma_M\}$
     \end{itemize}
 \end{block}
 
-\begin{block}{Parameters of the Model}
+\begin{block}{模型系数}
 \begin{itemize}
-    \item the transition probabilitis : $P(q \rightarrow q')$
-    \item the emission probabilitis: $P(q \uparrow \sigma)$ 
+    \item 状态转移概率: $P(q \rightarrow q')$
+    \item 状态$q$观测为$\sigma$的概率: $P(q \uparrow \sigma)$ 
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}{HMM Usage Basics}
-    The probability of a string x being emitted by an HMM M is computed by:
+\begin{frame}{HMM 的使用}
+    一个HMM模型观测为一个字符串$x$的概率是:
     \begin{equation}
     P(x|M) = \sum_{q_1,\cdots,q_l \in Q^t} {
         \prod_{k=1}^{l+1}{
@@ -56,7 +56,8 @@
         }
     }
     \end{equation}
-    To recover the state sequence $V(x|M)$ that has the highest probability of having produced an observation sequence y:
+    如下恢复出最可能生成观测$y$的状态序列：
+    %To recover the state sequence $V(x|M)$ that has the highest probability of having produced an observation sequence y:
     \begin{equation}
     P(x|M) = \sum_{q_1,\cdots,q_l \in Q^t} {
         \prod_{k=1}^{l+1}{
@@ -66,39 +67,42 @@
     \end{equation}
 \end{frame}
 
-\begin{frame}{ Information Extraction from Research Paper Headers}
-    \begin{block}{Learn Model Parameters}
+\begin{frame}{ 从科技论文头部挖掘信息}
+    %Information Extraction from Research Paper Headers}
+    \begin{block}{模型参数学习}
+        %Learn Model Parameters}
+        可以的两种情况:
         \begin{itemize}
-            \item each state is associated with a class, such as \textbf{title}, \textbf{author}, \textbf{address} and so on.
-            \item learn the class-specific unigram distributions and the state transition probabilities from  data.
+            \item 每一个状态与代表一钟类别，比如 \textbf{标题}, \textbf{作者}, \textbf{地址}等。
+            \item 一种类别联系到多种状态，每个状态间仅有有限的转移。
         \end{itemize}
     \end{block}
     
-    \begin{block}{ To label a new header}
+    \begin{block}{ 标注新的论文头部}
         \begin{itemize}
-            \item treat the words from the header as observations
-            \item recover the most-likely state sequence with \textbf{Viterbi algorithm}
+            \item 将论文头部的词作为观测值
+            \item 用 \textbf{Viterbi 算法}恢复最有可能的状态序列
         \end{itemize}
     \end{block}
 \end{frame}
 
-\section{Learning Model Structure from Data}
+\section{从训练集中学习HMM模型}
 \begin{frame}{Introduction}
-    \textbf{How many states the model should contain?}
-    \begin{block}{ Alternatives}
+    \textbf{首先要确定模型中有多少状态.}
+    \begin{block}{可取方案:}
         \begin{itemize}
-            \item simply assigning one state per class
-            \item build a model with multple states per class
+            \item 仅仅为每一个状态分配一种类别
+            \item 将一种类别联系到多个状态
         \end{itemize}
     \end{block}
 \end{frame}
 
 % contents 
-\begin{frame}{Model Learning Process}
+\begin{frame}{模型学习过程}
     \begin{enumerate}
-        \item each word is assigned its own state
-        \item neighbor-merging
-        \item deep merging
+        \item 为每一个词独立分配一个状态
+        \item neighbor-merging(相邻合并}
+        \item 进一步合并}
             \begin{itemize}
                 \item V-merging
                 \item M-merging
@@ -107,11 +111,11 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Model Learning Process}
+\begin{frame}{模型学习过程}
     \begin{enumerate}
-        \item \textcolor{red} {\textbf{Assigning Each word its own state}}
-        \item Neighbor-merging
-        \item Deep merging
+        \item \textbf{\textcolor{red}{为每一个词独立分配一个状态}}
+        \item neighbor-merging(相邻合并}
+        \item 进一步合并}
             \begin{itemize}
                 \item V-merging
                 \item M-merging
@@ -120,16 +124,17 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Assigning Each word its own state}
-    Each word in the training data is assignd its own state, which transitions to the state of the word that follows it.
+\begin{frame}{为每一个词独立分配一个状态}
+    为训练集中每一个词分配一个独立的状态，同时，当前词汇与下一个词汇间对应着状态转移
+    %Each word in the training data is assignd its own state, which transitions to the state of the word that follows it.
     \textbf{!!!!Picture}
 \end{frame}
 
-\begin{frame}{Model Learning Process}
+\begin{frame}{模型学习过程}
     \begin{enumerate}
-        \item Assigning Each word its own state
-        \item \textcolor{red} {\textbf{Neighbor-merging}}
-        \item Deep merging
+        \item 为每一个词独立分配一个状态
+        \item \textbf{\textcolor{red}{neighbor-merging(相邻合并}}
+        \item 进一步合并}
             \begin{itemize}
                 \item V-merging
                 \item M-merging
@@ -138,41 +143,46 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Neighbor-merging}
-    Combines all states that share a transition and have the same class label.    
+
+\begin{frame}{Neighbor-merging相邻合并}
+    %Combines all states that share a transition and have the same class label.    
+    合并有共同转移以及相同类别的所有状态
     \textbf{!!!!Picture}
 \end{frame}
 
-\begin{frame}{Model Learning Process}
+\begin{frame}{模型学习过程}
     \begin{enumerate}
-        \item Assigning Each word its own state
-        \item Neighbor-merging
-        \item \textcolor{red} {Deep merging}
+        \item 为每一个词独立分配一个状态
+        \item neighbor-merging(相邻合并}
+        \item 进一步合并}
             \begin{itemize}
-                \item \textcolor{red} {\textbf{ V-merging}}
+                \item \textbf{\textcolor{red}{V-merging}}
                 \item M-merging
                 \item Bayesian model merging
             \end{itemize}
     \end{enumerate}
 \end{frame}
+
+
 
 \begin{frame}{V-merging}
-    merges any two states that have the same label and share transitions from or to a common state. 
+    合并任何有相同类别标签且转移到相同状态或者从共同状态转移的两个状态
     \textbf{!!!!Picture}
 \end{frame}
 
-\begin{frame}{Model Learning Process}
+\begin{frame}{模型学习过程}
     \begin{enumerate}
-        \item Assigning Each word its own state
-        \item Neighbor-merging}}
-        \item \textcolor{red} {Deep merging}
+        \item 为每一个词独立分配一个状态
+        \item neighbor-merging(相邻合并}
+        \item 进一步合并}
             \begin{itemize}
                 \item V-merging
-                \item \textcolor{red} {\textbf{M-merging}}
-                \item \textcolor{red} {\textbf{Bayesian model merging}}
+                \item \textbf{\textcolor{red}{M-merging}}
+                \item \textbf{\textcolor{red}{Bayesian model merging}}
             \end{itemize}
     \end{enumerate}
 \end{frame}
+
 
 \begin{frame}{M-merging and Bayesian Model Merging}
 \begin{block}{M-merging}
@@ -186,7 +196,7 @@
 
 
 
-\section{Experimental Results}
+\section{实验结果}
 \begin{frame}{Introduction}
 
 \end{frame}
