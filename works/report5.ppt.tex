@@ -29,7 +29,7 @@
 \tableofcontents
 \end{frame}
 
-\section{HMM基础}
+zhongsection{HMM基础}
 \begin{frame}{Introduction to HMM}
 \begin{block}{HMM组成 }
     \begin{itemize}
@@ -46,6 +46,16 @@
 \end{itemize}
 \end{block}
 \end{frame}
+
+
+\begin{frame}{Introduction to HMM}
+    \begin{block}{Example}
+    \begin{center}
+        \includegraphics[height=150pt]{report5/hmm.png}
+    \end{center}
+\end{block}
+\end{frame}
+
 
 \begin{frame}{HMM 的使用}
     一个HMM模型观测为一个字符串$x$的概率是:
@@ -128,7 +138,7 @@
     为训练集中每一个词分配一个独立的状态，同时，当前词汇与下一个词汇间对应着状态转移
     %Each word in the training data is assignd its own state, which transitions to the state of the word that follows it.
     \begin{center}
-        \includegraphics[height=150pt]{report5/hmm.png}
+        \includegraphics[height=80pt]{report5/neighbor-1.png}
     \end{center}
     
 \end{frame}
@@ -147,19 +157,12 @@
 \end{frame}
 
 
-\begin{frame}{Neighbor-merging相邻合并}
-    %Combines all states that share a transition and have the same class label.    
-    合并有共同转移以及相同类别的所有状态
-    \begin{center}
-        \includegraphics[width=250pt]{report5/neighbor-1.png}
-    \end{center}
-\end{frame}
 
 \begin{frame}{Neighbor-merging相邻合并}
     %Combines all states that share a transition and have the same class label.    
     合并有共同转移以及相同类别的所有状态
     \begin{center}
-        \includegraphics[width=250pt]{report5/neighbor-2.png}
+        \includegraphics[height=90pt]{report5/neighbor-2.png}
     \end{center}
 \end{frame}
 
@@ -219,8 +222,16 @@
 \end{frame}
 
 \section{实验结果}
-\begin{frame}{Introduction}
+\begin{frame}{实验结果}
+    \begin{center}
+        \includegraphics[height=150pt]{report5/m-picture.png}
+    \end{center}
+\end{frame}
 
+\begin{frame}{实验结果}
+    \begin{center}
+        \includegraphics[height=110pt]{report5/m-picture2.png}
+    \end{center}
 \end{frame}
 
 \section{Conclude}
