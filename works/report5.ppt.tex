@@ -2,9 +2,8 @@
 \usepackage{ctex} %注意这个宏包
 \usepackage{color}
 \usepackage{graphics,graphicx}
-\usepackage{pstricks,pst-node,pst-tree}
-\usetheme{Boadilla}
-\usecolortheme{beaver}
+\usetheme{Berkeley}
+\useinnertheme{rounded}
 \usepackage{pstricks}
 \usepackage{pst-plot}
 \CTEXoptions[today=old]
@@ -29,7 +28,7 @@
 \tableofcontents
 \end{frame}
 
-zhongsection{HMM基础}
+\subsection{Introduction to HMM}
 \begin{frame}{Introduction to HMM}
 \begin{block}{HMM组成 }
     \begin{itemize}
@@ -47,16 +46,16 @@ zhongsection{HMM基础}
 \end{block}
 \end{frame}
 
-
+\subsection{Example}
 \begin{frame}{Introduction to HMM}
-    \begin{block}{Example}
-    \begin{center}
-        \includegraphics[height=150pt]{report5/hmm.png}
-    \end{center}
+\begin{block}{Example}
+\begin{center}
+    \includegraphics[height=150pt]{report5/hmm.png}
+\end{center}
 \end{block}
 \end{frame}
 
-
+\section{HMM 的使用}
 \begin{frame}{HMM 的使用}
     一个HMM模型观测为一个字符串$x$的概率是:
     \begin{equation}
@@ -78,12 +77,25 @@ zhongsection{HMM基础}
 \end{frame}
 
 \begin{frame}{ 从科技论文头部挖掘信息}
+    \begin{block}{提取的15个类别}
+        title, author, affiliation, address, note, email, date\\
+        abstract, introduction, phone, keywords, web, degree, publication number(pubnum) and page
+         
+    \end{block}
+    \begin{block}{论文头}
+    \begin{center}
+        \includegraphics[width=240pt]{report5/report_header.png}
+    \end{center}
+    \end{block}
+\end{frame}
+
+\begin{frame}{ 从科技论文头部挖掘信息}
     %Information Extraction from Research Paper Headers}
     \begin{block}{模型参数学习}
         %Learn Model Parameters}
         可以的两种情况:
         \begin{itemize}
-            \item 每一个状态与代表一钟类别，比如 \textbf{标题}, \textbf{作者}, \textbf{地址}等。
+            \item 每一个状态与代表一种类别，比如 \textbf{标题}, \textbf{作者}, \textbf{地址}等。
             \item 一种类别联系到多种状态，每个状态间仅有有限的转移。
         \end{itemize}
     \end{block}
@@ -96,7 +108,7 @@ zhongsection{HMM基础}
     \end{block}
 \end{frame}
 
-\section{从训练集中学习HMM模型}
+\subsection{从训练集中学习HMM模型}
 \begin{frame}{Introduction}
     \textbf{首先要确定模型中有多少状态.}
     \begin{block}{可取方案:}
@@ -107,7 +119,7 @@ zhongsection{HMM基础}
     \end{block}
 \end{frame}
 
-% contents 
+% contents
 \begin{frame}{模型学习过程}
     \begin{enumerate}
         \item 为每一个词独立分配一个状态
@@ -121,67 +133,25 @@ zhongsection{HMM基础}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{模型学习过程}
-    \begin{enumerate}
-        \item \textbf{\textcolor{red}{为每一个词独立分配一个状态}}
-        \item neighbor-merging(相邻合并)
-        \item 进一步合并
-            \begin{itemize}
-                \item V-merging
-                \item M-merging
-                \item Bayesian model merging
-            \end{itemize}
-    \end{enumerate}
-\end{frame}
-
+\subsection{一个词一状态}
 \begin{frame}{为每一个词独立分配一个状态}
     为训练集中每一个词分配一个独立的状态，同时，当前词汇与下一个词汇间对应着状态转移
     %Each word in the training data is assignd its own state, which transitions to the state of the word that follows it.
     \begin{center}
         \includegraphics[height=80pt]{report5/neighbor-1.png}
     \end{center}
-    
 \end{frame}
 
-\begin{frame}{模型学习过程}
-    \begin{enumerate}
-        \item 为每一个词独立分配一个状态
-        \item \textbf{\textcolor{red}{neighbor-merging(相邻合并}}
-        \item 进一步合并
-            \begin{itemize}
-                \item V-merging
-                \item M-merging
-                \item Bayesian model merging
-            \end{itemize}
-    \end{enumerate}
-\end{frame}
-
-
-
+\subsection{Neighbor-merging相邻合并}
 \begin{frame}{Neighbor-merging相邻合并}
     %Combines all states that share a transition and have the same class label.    
     合并有共同转移以及相同类别的所有状态
     \begin{center}
-        \includegraphics[height=90pt]{report5/neighbor-2.png}
+        \includegraphics[width=250pt]{report5/neighbor-2.png}
     \end{center}
 \end{frame}
 
-
-\begin{frame}{模型学习过程}
-    \begin{enumerate}
-        \item 为每一个词独立分配一个状态
-        \item neighbor-merging(相邻合并)
-        \item 进一步合并
-            \begin{itemize}
-                \item \textbf{\textcolor{red}{V-merging}}
-                \item M-merging
-                \item Bayesian model merging
-            \end{itemize}
-    \end{enumerate}
-\end{frame}
-
-
-
+\subsection{V-merging}
 \begin{frame}{V-merging}
     合并任何有相同类别标签且转移到相同状态或者从共同状态转移的两个状态
     \begin{center}
@@ -196,20 +166,7 @@ zhongsection{HMM基础}
     \end{center}
 \end{frame}
 
-\begin{frame}{模型学习过程}
-    \begin{enumerate}
-        \item 为每一个词独立分配一个状态
-        \item neighbor-merging(相邻合并)
-        \item 进一步合并
-            \begin{itemize}
-                \item V-merging
-                \item \textbf{\textcolor{red}{M-merging}}
-                \item \textbf{\textcolor{red}{Bayesian model merging}}
-            \end{itemize}
-    \end{enumerate}
-\end{frame}
-
-
+\subsection{M-merging and Bayesian}
 \begin{frame}{M-merging and Bayesian Model Merging}
 多个状态对应一个类别:
 \begin{block}{M-merging}
@@ -219,6 +176,38 @@ zhongsection{HMM基础}
 \begin{block}{Bayesian Model Merging}
     利用贝叶斯方法进行HMM的模型状态合并
 \end{block}
+\end{frame}
+
+\subsection{统计方法}
+\begin{frame}{统计方法}
+    \begin{block}{ 为取得HMM 系数的最大似然估计}
+    \begin{equation}
+        \hat{P}(q \rightarrow q') = 
+        \frac{c(q \rightarrow q')}
+        {\sum_{\sigma \in Q}{c(q \rightarrow s)}}
+    \end{equation}
+
+    \begin{equation}
+        \hat{P}(q \uparrow \sigma) = 
+        \frac{c(q\uparrow \sigma)}
+        {\sum_{\rho \in \sum}{c(q \uparrow \rho)}}
+    \end{equation}
+    \end{block}
+\end{frame}
+
+\section{其它方面}
+\begin{frame}
+    \begin{block}{Unlabeled Data(未标注数据)}
+        在V-merging 或 M-merging 的基础之上,采用\textbf{Baum-Welch}算法进行非监督学习. 
+    \end{block}
+
+    \begin{block}{ Distantly-labeled Data(远亲标注数据)}
+        为充实训练集,混合使用已经标注的相似数据集. 
+        \begin{itemize}
+            \item L+D: Labeled 和 Dislabeled 数据集简单组合
+            \item L*D: Labeled 和 Dislabeled 数据集的线性插值
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \section{实验结果}
