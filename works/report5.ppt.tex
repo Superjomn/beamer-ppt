@@ -11,7 +11,7 @@
 \title{Learning HMM Structure for Information Extraction}
 \author{Speaker:\\Chunwei Yan}
 \institute[PKUSZ]{
-    互联网研发中心\\
+    互联网研发中心
 }
 \date{\today}
 
@@ -119,6 +119,22 @@
     \end{block}
 \end{frame}
 
+\begin{frame}{统计方法}
+    \begin{block}{ 为取得HMM 系数的最大似然估计}
+    \begin{equation}
+        \hat{P}(q \rightarrow q') = 
+        \frac{c(q \rightarrow q')}
+        {\sum_{\sigma \in Q}{c(q \rightarrow s)}}
+    \end{equation}
+
+    \begin{equation}
+        \hat{P}(q \uparrow \sigma) = 
+        \frac{c(q\uparrow \sigma)}
+        {\sum_{\rho \in \sum}{c(q \uparrow \rho)}}
+    \end{equation}
+    \end{block}
+\end{frame}
+
 % contents
 \begin{frame}{模型学习过程}
     \begin{enumerate}
@@ -178,23 +194,6 @@
 \end{block}
 \end{frame}
 
-\subsection{统计方法}
-\begin{frame}{统计方法}
-    \begin{block}{ 为取得HMM 系数的最大似然估计}
-    \begin{equation}
-        \hat{P}(q \rightarrow q') = 
-        \frac{c(q \rightarrow q')}
-        {\sum_{\sigma \in Q}{c(q \rightarrow s)}}
-    \end{equation}
-
-    \begin{equation}
-        \hat{P}(q \uparrow \sigma) = 
-        \frac{c(q\uparrow \sigma)}
-        {\sum_{\rho \in \sum}{c(q \uparrow \rho)}}
-    \end{equation}
-    \end{block}
-\end{frame}
-
 \section{其它方面}
 \begin{frame}
     \begin{block}{Unlabeled Data(未标注数据)}
@@ -211,20 +210,45 @@
 \end{frame}
 
 \section{实验结果}
-\begin{frame}{实验结果}
+\begin{frame}{实验数据}
     \begin{center}
-        \includegraphics[height=150pt]{report5/m-picture.png}
+        \includegraphics[width=240pt]{report5/traing_set.png}
     \end{center}
 \end{frame}
 
-\begin{frame}{实验结果}
+\begin{frame}{一个类别一个状态的实验结果}
     \begin{center}
-        \includegraphics[height=110pt]{report5/m-picture2.png}
+        \includegraphics[width=240pt]{report5/one_state_per_class.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{M-merging V-Merging结果}
+    \begin{center}
+        \includegraphics[width=240pt]{report5/m-picture.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Baum-Welch 后期加工结果}
+    \begin{center}
+        \includegraphics[width=240pt]{report5/bw.png}
     \end{center}
 \end{frame}
 
 \section{Conclude}
+\begin{frame}{Conclude}
+\begin{enumerate}
+    \item HMM 在信息提取领域真的有潜力, 这篇论文中达到了 92.9\%的精度.
+    \item 一个类别(class)对应一到多个状态(state)更加有效
+    \item 远亲标注(Distantly-labeled)数据在模型系数估计方面有很大帮助,插值组合
+\end{enumerate}
+\end{frame}
 
-
-
+\begin{frame}{References}
+\begin{thebibliography}{10}
+\bibitem{hmm} [Kristie .S, Andrew .M and Ronald .R, 1999]
+    \newblock School of Computer Science Carneie Mellon University
+    \newblock Just Research
+    \newblock \emph{Learning Hidden Markov Model Structure for Information Extraction}
+\end{thebibliography}
+\end{frame}
 \end{document}
