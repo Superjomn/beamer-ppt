@@ -1,0 +1,126 @@
+\documentclass{beamer}
+\usepackage{ctex} %注意这个宏包
+\usepackage{multicol}
+\usepackage{color}
+%\usetheme{umbc4}
+\usetheme[height=12mm]{Rochester}
+\usetheme{Berkeley}
+\usepackage{pst-plot}
+\CTEXoptions[today=old]
+\title{微博followee 推荐}
+\author{Chunwei Yan}
+\institute[PKUSZ]{
+\texttt{superjom@sz.pku.edu.cn}
+}
+\date{\today}
+
+\begin{document}
+% ------------- title page ----------------------------
+%--- the titlepage frame -------------------------%
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ------------- question ---------------------
+\begin{frame}{背景}
+    \begin{itemize}
+    \item 社交网络不断发展
+        \begin{itemize}
+        \item Twitter
+        \item Facebook
+        \item Renren
+        \item MicroMsg
+        \end{itemize}
+    \item 信息过载
+        \begin{itemize}
+            \item 感兴趣的信息
+            \item 感兴趣的人
+        \end{itemize}
+    \item  推荐系统
+        \begin{itemize}
+        \item 根据用户的已有信息,建立用户的兴趣模型
+        \item 推测用户感兴趣的,推荐
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{KDDCUP 2012 Track1}
+    \begin{itemize}
+    \item 目标: 推测一个用户是否会follow 推荐的好友
+    \item datasets: 
+        \begin{enumerate}
+        \item 训练集:(UserId)(ItemId)(Result)(Unix-timestamp)
+        \item 其他信息:
+            \begin{itemize}
+                \item Profile: (UserId)(Year-of-birth)(Gender)(Number-of-tweet)(Tag-Ids)
+                \item item: (ItemId)(Item-Category)(Item-Keyword)
+                \item user-action: (UserId)(Action-Destination-UserId)(Number-of-at-action)(Number-of-retweet)(Number-of-comment)
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{相关工作}
+    \begin{block}{上海交大}
+        \begin{itemize}
+        \item 1st-0.4265
+        \item Combining Factorization Model and Additive Forest for Collaborative Followee Recommendation
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{盛大研究院}
+        \begin{itemize}
+        \item 2st 
+        \item Context-aware Ensemble of Multifaceted Factorization Models for Recommendation Prediction in Social Networks
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{方法总结}
+    \begin{block}{SVD 矩阵分解}
+    \end{block}
+    
+    \begin{block}{Additive Forest}
+    \end{block}
+
+    \begin{block}{排序学习(Learn to Rank)}
+    \end{block}
+\end{frame}
+
+\begin{frame}{处理流程}
+    \begin{enumerate}
+    \item 数据分析及预处理
+    \item 建立模型
+    \item 多模型参数学习
+    \item 合并模型
+    \end{enumerate}
+\end{frame}
+% 开始各个步骤的讲解 ---------------------------------------
+% ----------------------------------------------------------
+\begin{frame}{1. 数据分析及预处理}
+    \begin{itemize}
+    \item 日期时间
+        \begin{itemize}
+        \item 日期,星期
+        \item 一天中早晚时间
+        \end{itemize}
+    \item 年龄
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{2. 建立模型}
+    \begin{itemize}
+    \item SVD / SVD++
+    \item Addative Forest
+    \item KNN
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{3. 多模型参数学习}
+\end{frame}
+
+\begin{frame}{4. 合并模型}
+\end{frame}
+
+
+\end{document}
