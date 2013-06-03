@@ -1,13 +1,14 @@
 \documentclass{beamer}
 \usepackage{ctex} %注意这个宏包
 \usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{graphics,graphicx}
 \usepackage{color}
 %\usetheme{umbc4}
-\usetheme[height=12mm]{Rochester}
-\usetheme{Berkeley}
+\usetheme{Montpellier} 
 \usepackage{pst-plot}
 \CTEXoptions[today=old]
-\title{微博followee 推荐}
+\title{从KDDCUP2012看微博好友推荐}
 \author{Chunwei Yan}
 \institute[PKUSZ]{
 \texttt{superjom@sz.pku.edu.cn}
@@ -21,32 +22,31 @@
   \titlepage
 \end{frame}
 
-% ------------- question ---------------------
+
 \begin{frame}{背景}
+\begin{itemize}
+    \item KDDCUP2012
+    \item 腾讯微博
+    \item 1st-0.4265 undergrads@数据和知识管理实验室@上海交大
+    \item 2st-0.41874 盛大研究院
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Outline}
     \begin{itemize}
-    \item 社交网络不断发展
-        \begin{itemize}
-        \item Twitter
-        \item Facebook
-        \item Renren
-        \item MicroMsg
-        \end{itemize}
-    \item 信息过载
-        \begin{itemize}
-            \item 感兴趣的信息
-            \item 感兴趣的人
-        \end{itemize}
-    \item  推荐系统
-        \begin{itemize}
-        \item 根据用户的已有信息,建立用户的兴趣模型
-        \item 推测用户感兴趣的,推荐
-        \end{itemize}
+        \item 训练数据格式
+        \item 超越矩阵分解模型
+        \item 其他方法
+        \item 实验分析
     \end{itemize}
 \end{frame}
 
+\section{训练数据格式}
+
 \begin{frame}{KDDCUP 2012 Track1}
     \begin{itemize}
-    \item 目标: 推测一个用户是否会follow 推荐的好友
+    \item 目标: 用户好友推荐, MAP@3
+    \pause
     \item datasets: 
         \begin{enumerate}
         \item 训练集:(UserId)(ItemId)(Result)(Unix-timestamp)
@@ -60,67 +60,180 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{相关工作}
-    \begin{block}{上海交大}
-        \begin{itemize}
-        \item 1st-0.4265
-        \item Combining Factorization Model and Additive Forest for Collaborative Followee Recommendation
-        \end{itemize}
-    \end{block}
+\section{常规方法}
+\begin{frame}{矩阵分解模型(SVD/SVD++)}
+    \begin{equation}
+        \hat{r}_{ui} = 
+        ( 
+        \sum_{c\in C(u)} \textcolor{red}{\alpha_c^{(u)}}\bold{p}_c)^T
+        (
+        \sum_{c\in C(i)} \textcolor{blue}{\beta_c^{(i)}}\bold{q}_c)
+        +
+        \sum_{c\in C(u,i)} \textcolor{orange}{\gamma_c^{(u,i)}}g_c
+    \end{equation}
 
-    \begin{block}{盛大研究院}
-        \begin{itemize}
-        \item 2st 
-        \item Context-aware Ensemble of Multifaceted Factorization Models for Recommendation Prediction in Social Networks
-        \end{itemize}
-    \end{block}
+    \pause
+    \begin{itemize}
+        \item $\theta = \{\bold{p}, \bold{q}, g\}$. 模型参数,随机梯度下降
+        \item $\color{red}\alpha_c^{(u)}$ 用户特征(user features), tags, keywords, 社交网络
+        \item $\color{blue}\beta_c^{(i)}$ item features, 分类,网络
+        \item $\color{orange}\gamma_c^{(u,i)}$ 公共特征, user, item 间的交互
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{方法总结}
-    \begin{block}{SVD 矩阵分解}
-    \end{block}
+\section{超越矩阵分解}
+\begin{frame}{Additive Forest}
+    \begin{equation}
+        \hat{r}_{ui} = 
+        \sum_{s=1}^{S} f_{s,root(i,s)}(x_{u})
+        \label{}
+    \end{equation}
+    \begin{itemize}
+        \item $x_{u}$ 用户$u$的特性
+        \item $f_{s,root(i,s)}$ 用回归树定义的函数
+        \item 采用梯度提升法学习
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Additive Forest}
+    \begin{center}
+        \includegraphics[height=180pt]{additive-tree-1.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Additive Forest 实例}
+    \begin{center}
+        \includegraphics[height=200pt]{additive-tree-2.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{矩阵分解模型 vs Additive Forest}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+        \hline
+           &矩阵分解 & Additive Forest \\
+           \hline
+        稀疏矩阵处理 & 非常好         &  一般\\ \hline
+        不同信息整合 & 线性组合       & 非线性组合\\ \hline
+        对连续值的处理 & 人为划分     & 自动产生划分 \\
+        \hline
+    \end{tabular}
+    \pause
+    \begin{itemize}
+        \item 两种模型都各有各自的特点
+        \item 结合他们的特点对提高精度至关重要
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{矩阵分解模型 vs Additive Forest}
+        \pause
+    \begin{columns}[t]
+        \column{6cm}
+        \begin{block}{矩阵分解模型}
+        \begin{equation}
+            \hat{r}_{ui} = 
+            p_u^T q_i + W_{i, \textcolor{red}{ag(u)}}
+            \label{}
+        \end{equation}
+        \begin{itemize}
+        \item $\textcolor{red}{ag(u)}$ 年龄划分索引
+        \item 需要实现人为划分
+        \end{itemize}
+        \begin{center}
+            \includegraphics[height=55pt]{fm1.png}
+        \end{center}
+        \end{block}
+
+        \pause
+        \column{6cm}
+        \begin{block}{Additive Forest}
+            \begin{center}
+                \includegraphics[height=145pt]{additive-tree-3.png}
+            \end{center}
+        \end{block}
+    \end{columns}
+\end{frame}
+
+\section{其他模型}
+\begin{frame}{社交网络}
+\begin{equation}
+    \hat{r}_{ui} = 
+    \textcolor{red}{
+    ( \frac{1}{\sqrt{\left|F(u)\right|}}
+    \sum_{j\in F(u)}\bold{p}_j)^T}
+    \bold{q}_i + b_i
+    \label{}
+\end{equation}
+
+\pause
+\begin{itemize}
+    \item $F(u)$ user $u$ follow 的好友
+    \item 模拟其好友对其影响
+\end{itemize}
+\end{frame}
+
+\begin{frame}{关键词和Tag}
+    \begin{itemize}
+        \item 分类信息对用户的预测有影响 
+        \item 影响无法无法计量
+
+        \pause
+        \item 作为潜在因素(SVD++)
+    \end{itemize}
+    \begin{equation}
+        \bold{p}'_u = 
+        \bold{p}_u + 
+            \frac{1}{\left|\left|w_u\right|\right|_2}
+            \sum_{j\in K(u)} w_{u,j}\bold{\textcolor{blue}{y}}_j
+        \label{}
+    \end{equation}
+    \begin{itemize}
+        \item $K(u)$ 用户$u$的 keywords or tags 
+        \item $w_{u,j}$ 特征的权重
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{用户序列模式(User Sequential Patterns)}
+    \begin{itemize}
+        \item 推测用户点击趋势
+    \end{itemize}
+
+    \begin{center}
+        \includegraphics[height=105pt]{qequential1.png}
+    \end{center}
+
+    \pause
+    \begin{equation}
+        \hat{r}'_{ui}{(t)} = 
+        \hat{r}_{ui} + f(\triangle  t),
+        f(\triangle  t) = \sum_{s=1}^{S} f_s(\triangle  t)
+        \label{}
+    \end{equation}
+\end{frame}
+
+\section{实验结果}
+\begin{frame}{实验结果}
+    \begin{center}
+        \includegraphics[height=148pt]{res.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{引用}
+
+\begin{thebibliography}{10}
+\bibitem{mapreduce} [Tianqi Chen, Linpeng Tan, QIn Liu and so on,2012]
+    \newblock ACM
+    \newblock \emph{Combining Factorization Model and Additive Forest for Collaborative Followee Recommendation}, 2004
+
+\bibitem{d} [Yehuda Koren, 2008]
+    \newblock \emph{Factorization Meets the Neighborhood: a Multifaceted Collborative Filtering Model}, 2008
+\end{thebibliography}
     
-    \begin{block}{Additive Forest}
-    \end{block}
-
-    \begin{block}{排序学习(Learn to Rank)}
-    \end{block}
 \end{frame}
 
-\begin{frame}{处理流程}
-    \begin{enumerate}
-    \item 数据分析及预处理
-    \item 建立模型
-    \item 多模型参数学习
-    \item 合并模型
-    \end{enumerate}
+\begin{frame}
+    \begin{center}
+        {\Large Thank You, Questions? }
+    \end{center}
 \end{frame}
-% 开始各个步骤的讲解 ---------------------------------------
-% ----------------------------------------------------------
-\begin{frame}{1. 数据分析及预处理}
-    \begin{itemize}
-    \item 日期时间
-        \begin{itemize}
-        \item 日期,星期
-        \item 一天中早晚时间
-        \end{itemize}
-    \item 年龄
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{2. 建立模型}
-    \begin{itemize}
-    \item SVD / SVD++
-    \item Addative Forest
-    \item KNN
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{3. 多模型参数学习}
-\end{frame}
-
-\begin{frame}{4. 合并模型}
-\end{frame}
-
 
 \end{document}
